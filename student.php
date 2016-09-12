@@ -12,7 +12,9 @@ if (!isLoggedIn()) {
         die();
     }
     echo "<div><h2>Welcome, {$_SESSION['fname']} {$_SESSION['lname']}</h2></div>";
-    
+
+// start resume upload
+
     if ($_FILES['userfile']['name'] != NULL || $_FILES['userfile']['name'] != '') {
         $allowedExts = array('pdf');
         $temp = explode('.', $_FILES['userfile']['name']);
@@ -70,12 +72,14 @@ if (!isLoggedIn()) {
             echo '<br />';
             showSuccessfulNotification('Resume successfully uploaded');
         } else
-            showError( 'Error: Please upload a PDF document.' );
+            showError('Error: Please upload a PDF document.');
     }
+
+// end resume upload
 
     if ($_GET['action'] == 'jps') {
         displayJobPostingsToStudents();
-    } elseif ($_GET['action'] == 'editprof') {
+    } elseif ($_GET['action'] == 'editprof') { // variables and objects used in user profile editing
         if($_GET['sub'] == '') {
             $hidden = '';
             $mba = '';
@@ -386,6 +390,10 @@ if (!isLoggedIn()) {
                      <li><font size="+1">Resume</font>: ';
     }
 
+// end user profile editing
+// start front end user interaction with resume upload form
+// decides whether or not user has uploaded resume, and shows appropriate UI elements
+
     if ($_SESSION['resume'] != NULL) {
         echo '
             <font size="+1" color="green"><strong>On file</strong></font>';
@@ -398,7 +406,7 @@ if (!isLoggedIn()) {
             // MAX_FILE_SIZE must precede the file input field
             // Name of input element determines name in $_FILES array
             echo '
-                <form enctype="multipart/form-data" action="student.php" method="POST">
+                <form enctype="multipart/form-data" action="student.php" method="POST"> <!-- does not work, always gives error telling to upload a pdf doc -->
                   <input type="hidden" name="MAX_FILE_SIZE" value="512000" />
                   Resume: <input size="75" name="userfile" type="file" />
                   &nbsp;
@@ -436,7 +444,7 @@ if (!isLoggedIn()) {
                 <ul>
                   <li><a href="resumes/index.php?userid='.$_SESSION['id'].'" target="_blank">View / Download</a>
                   <li><a href="student.php?action=update">Replace</a>
-                  <li><a href="student.php?action=delete">Delete</a>
+                  <li><a href="student.php?action=delete">Delete</a> <!-- not working -->
                 </ul>
                 <br><b>Please note:</b> for your resume to be recommended to employers, you must have either:
                 <ul>
@@ -448,7 +456,7 @@ if (!isLoggedIn()) {
           </tr>
         </table>';
         }
-    } else {
+    } else { // should be triggered for accounts with no resume uploaded
         echo '
             <font size="+1" color="red"><strong>Not On File</strong></font>';
         echo '
