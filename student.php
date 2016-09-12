@@ -11,10 +11,9 @@ if (!isLoggedIn()) {
         header('Location: index.php?error=3');
         die();
     }
-    echo "<div><h2>Welcome, {$_SESSION['fname']} {$_SESSION['lname']}</h2></div>";
+    echo '<div><h2>Welcome, '.$_SESSION['fname'].' '.$_SESSION['lname'].'</h2></div>';
 
-// start resume upload
-
+    /* Student Resume Upload Backend */
     if ($_FILES['userfile']['name'] != NULL || $_FILES['userfile']['name'] != '') {
         $allowedExts = array('pdf');
         $temp = explode('.', $_FILES['userfile']['name']);
@@ -75,11 +74,13 @@ if (!isLoggedIn()) {
             showError('Error: Please upload a PDF document.');
     }
 
-// end resume upload
+    /* Job Postings and Edit Profile
 
+    If user selects Job Listings, redirect to Student Job Postings.
+    Else, if user selects Edit Profile, display form to do so. */
     if ($_GET['action'] == 'jps') {
         displayJobPostingsToStudents();
-    } elseif ($_GET['action'] == 'editprof') { // variables and objects used in user profile editing
+    } elseif ($_GET['action'] == 'editprof') {
         if($_GET['sub'] == '') {
             $hidden = '';
             $mba = '';
@@ -390,10 +391,10 @@ if (!isLoggedIn()) {
                      <li><font size="+1">Resume</font>: ';
     }
 
-// end user profile editing
-// start front end user interaction with resume upload form
-// decides whether or not user has uploaded resume, and shows appropriate UI elements
+    /* Student Resume Upload Front End
 
+    Shows appropriate UI elements based on whether or not user has
+    uploaded resume. */
     if ($_SESSION['resume'] != NULL) {
         echo '
             <font size="+1" color="green"><strong>On file</strong></font>';
@@ -456,7 +457,7 @@ if (!isLoggedIn()) {
           </tr>
         </table>';
         }
-    } else { // should be triggered for accounts with no resume uploaded
+    } else {  /* Triggers for accounts with no resume uploaded */
         echo '
             <font size="+1" color="red"><strong>Not On File</strong></font>';
         echo '
