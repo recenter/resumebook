@@ -7,7 +7,7 @@ if (!isLoggedIn()) {
     header('Location: index.php?error=2');
     die();
 } else {
-    if (in_array($_SESSION['access'], array(0, 2, 3)) {
+    if (in_array($_SESSION['access'], array(0, 2, 3))) {
         header('Location: index.php?error=3');
         die();
     }
