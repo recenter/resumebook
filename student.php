@@ -428,7 +428,7 @@ if (!isLoggedIn()) {
                 }
             } else
                 $bDeletedResume = false;
-                        
+
             if ($bDeletedResume) {
                 $userid = $_SESSION['id'];
                 mssql_query("
@@ -436,7 +436,8 @@ if (!isLoggedIn()) {
                 	SET resume = NULL
                 	WHERE id = '$userid'");
                 updateResume(NULL); // 0 );
-                header('Location: student.php');
+                $reURL='http://www3.business.uconn.edu/reresume/student.php';
+                echo '<meta http-equiv="refresh" content="0; URL='.$reURL.'">';
             }
         } else {
             echo '
