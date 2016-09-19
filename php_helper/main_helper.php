@@ -439,7 +439,7 @@
 		
 	}
 	
-	function updateStudent($id, $argus, $arguscertificate, $classes, $class, $major, $careertype, $geopref, $phone, $email, $permadd, $schooladd,$placement1, $placement2, $placement3,$hidden, $mba, $placed/*,$employee*/)
+	function updateStudent($id, $argus, $arguscertificate, $classes, $class, $major, $careertype, $geopref, $phone, $email, $permadd, $schooladd,$placement1, $placement2, $placement3,$hidden, $mba, $placed)
 	{
 	//	mssql_query( 'SET IDENTITY_INSERT students ON' );
 	
@@ -457,12 +457,12 @@
 		// don't update placed, leave it the same
 		if($placed == -1) 
 			$query = "UPDATE students
-				  SET argus = '$argus', arguscertificate = '$arguscertificate', class = '$class', classes = '$classes', major = '$major', careertype = '$careertype', geopref = '$geopref', phone = '$phone', email = '$email' , permadd = '$permadd', schooladd = '$schooladd', placement1 = '$placement1', placement2 = '$placement2', placement3 = '$placement3', hidden = '$hidden', mba = '$mba'/*,employee='$employee'*/
+				  SET argus = '$argus', arguscertificate = '$arguscertificate', class = '$class', classes = '$classes', major = '$major', careertype = '$careertype', geopref = '$geopref', phone = '$phone', email = '$email' , permadd = '$permadd', schooladd = '$schooladd', placement1 = '$placement1', placement2 = '$placement2', placement3 = '$placement3', hidden = '$hidden', mba = '$mba'
 				  WHERE id = '$id'";
 		else
 		
 		$query = "UPDATE students
-				  SET argus = '$argus', arguscertificate = '$arguscertificate', class = '$class', classes = '$classes', major = '$major', careertype = '$careertype', geopref = '$geopref', phone = '$phone', email = '$email' , permadd = '$permadd', schooladd = '$schooladd', placement1 = '$placement1', placement2 = '$placement2', placement3 = '$placement3', hidden = '$hidden', mba = '$mba', placed = '$placed'/*,employee='$employee'*/
+				  SET argus = '$argus', arguscertificate = '$arguscertificate', class = '$class', classes = '$classes', major = '$major', careertype = '$careertype', geopref = '$geopref', phone = '$phone', email = '$email' , permadd = '$permadd', schooladd = '$schooladd', placement1 = '$placement1', placement2 = '$placement2', placement3 = '$placement3', hidden = '$hidden', mba = '$mba', placed = '$placed'
 				  WHERE id = '$id'";
 			
 			$result = mssql_query( $query );
@@ -498,7 +498,6 @@
 				updateHidden($hidden);
 				updateMBA($mba);
 				updatePlaced($placed);
-				/*updateEmployee($employee);*/
 			}
 			
 			if( !is_bool( $result ) )
@@ -507,7 +506,7 @@
 				mssql_free_result( $lResult );		
 	}
 	
-	function updateStudent2($id, $argus, $arguscertificate, $classes, $class, $major, $careertype, $geopref, $phone, $email, $permadd, $schooladd,$placement1, $placement2, $placement3,$hidden, $mba, $placed/*,$employee*/)
+	function updateStudent2($id, $argus, $arguscertificate, $classes, $class, $major, $careertype, $geopref, $phone, $email, $permadd, $schooladd,$placement1, $placement2, $placement3,$hidden, $mba, $placed)
 	{
 	//	mssql_query( 'SET IDENTITY_INSERT students ON' );
 	
@@ -525,12 +524,12 @@
 		// don't update placed, leave it the same
 		if($placed == -1) 
 			$query = "UPDATE students
-				  SET argus = '$argus', arguscertificate = '$arguscertificate', class = '$class', classes = '$classes', major = '$major', careertype = '$careertype', geopref = '$geopref', phone = '$phone', email = '$email' , permadd = '$permadd', schooladd = '$schooladd', placement1 = '$placement1', placement2 = '$placement2', placement3 = '$placement3', hidden = '$hidden', mba = '$mba'/*,employee='$employee'*/
+				  SET argus = '$argus', arguscertificate = '$arguscertificate', class = '$class', classes = '$classes', major = '$major', careertype = '$careertype', geopref = '$geopref', phone = '$phone', email = '$email' , permadd = '$permadd', schooladd = '$schooladd', placement1 = '$placement1', placement2 = '$placement2', placement3 = '$placement3', hidden = '$hidden', mba = '$mba'
 				  WHERE id = '$id'";
 		else
 		
 		$query = "UPDATE students
-				  SET argus = '$argus', arguscertificate = '$arguscertificate', class = '$class', classes = '$classes', major = '$major', careertype = '$careertype', geopref = '$geopref', phone = '$phone', email = '$email' , permadd = '$permadd', schooladd = '$schooladd', placement1 = '$placement1', placement2 = '$placement2', placement3 = '$placement3', hidden = '$hidden', mba = '$mba', placed = '$placed'/*,employee='$employee'*/
+				  SET argus = '$argus', arguscertificate = '$arguscertificate', class = '$class', classes = '$classes', major = '$major', careertype = '$careertype', geopref = '$geopref', phone = '$phone', email = '$email' , permadd = '$permadd', schooladd = '$schooladd', placement1 = '$placement1', placement2 = '$placement2', placement3 = '$placement3', hidden = '$hidden', mba = '$mba', placed = '$placed'
 				  WHERE id = '$id'";
 			
 			$result = mssql_query( $query );

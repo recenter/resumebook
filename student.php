@@ -84,7 +84,6 @@ if (!isLoggedIn()) {
         if($_GET['sub'] == '') {
             $hidden = '';
             $mba = '';
-            // $employee = '';
             $argus = '';
             $arguscertificate = '';
             $class = '';
@@ -117,7 +116,6 @@ if (!isLoggedIn()) {
             if ($_SESSION['permadd'] != '') {
                 $mba = $_SESSION['mba'];
                 $hidden = $_SESSION['hidden'];
-                // $employee = $_SESSION['employee'];
                 $argus = $_SESSION['argus'];
                 $arguscertificate = $_SESSION['arguscertificate'];
                 $class = $_SESSION['class'];
@@ -372,7 +370,7 @@ if (!isLoggedIn()) {
             	$_SESSION['id'], $argus, $arguscertificate, $classes/*$_POST['classes']*/,
             	$_POST['class'], $majorIndex, $careertype, $geoprefIndex,
             	$_POST['phone'], $_POST['email'], $permadd, $schooladd,
-            	$pl1, $pl2, $pl3, $hidden, $mba, -1/*, $_SESSION['employee']*/);
+            	$pl1, $pl2, $pl3, $hidden, $mba, -1);
         }
     }
 

@@ -409,7 +409,6 @@
 			$isStudent = ( $student['class'] == 0 ? false : true );
 			$mba = $student['mba'];
 			$hidden = $student['hidden'];
-			/*$employee = $student['employee'];*/
 			$studentPlaced = $student['placed'];
 			$argus = $student['argus'];
 			$arguscertificate = $student['arguscertificate'];					
@@ -461,8 +460,6 @@
 								<td>&nbsp;&nbsp;<input type="checkbox" name="profileHidden" value="yes" ' . ( $hidden == "1" ? 'checked' : '' ) . ' />&nbsp;&nbsp;&nbsp;<strong><font color="#FF0000">Hide profile from employers search</font></strong></td>
 							</tr>
 							<tr>
-								<td>&nbsp;&nbsp;<input type="checkbox" name="isemployee" value="yes" ' . ( $employee == "1" ? 'checked' : '' ) . ' />&nbsp;&nbsp;&nbsp;<strong>RECenter Employee</strong></td>
-							</tr>
 								<td>&nbsp;&nbsp;<input type="checkbox" name="studentPlaced" value="yes" ' . ( $studentPlaced == "1" ? 'checked' : '' ) . ' />&nbsp;&nbsp;&nbsp;<strong><font color="#0000FF">Student is placed</font></strong></td>
 							</tr>
 							<tr>
