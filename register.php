@@ -32,22 +32,9 @@
             {
                 $student = ( $_GET['action'] == 'student_confirm' ? true : false );
                 $alumni = ( $_GET['action'] == 'alumni_confirm' ? true : false );
-                $employer = ($_GET['action'] == 'employer_confirm'? true : false );        
-                //echo $student.$alumni.$employer;
+                $employer = ($_GET['action'] == 'employer_confirm'? true : false );
                 if($student == true || $alumni == true)
-                {
-                    /*    
-                    if( !verifyName( $_POST['fname'] ) )
-                    {
-                        $showError = true;
-                        $errorCode['fname'] = true;
-                    }                        
-                    if( !verifyName( $_POST['lname'] ) )
-                    {
-                        $showError = true;
-                        $errorCode['lname'] = true;
-                    }        
-                    */    
+                {    
                     if( isEmpty( $_POST['class'] ) && $student )
                     {
                         $showError = true;
@@ -267,59 +254,20 @@
                     if($duplicatePSoft == true || $duplicateEmail == true)
                         showError( 'Error: Please fill all forms correctly' ); 
                 }
+
                 if( $student )
-                    startTableWithForm( 'register_student', 'register.php?type=student&amp;action=student_confirm', 'Student Registration', 'table_whiteBox2' );
+                    startTableWithForm( 'register_student', 'register.php?type=student&amp;action=student_confirm', 'Student Registration', 'table_topBorder' );
                 else
-                    startTableWithForm( 'register_alumni', 'register.php?type=alumni&amp;action=alumni_confirm', 'Alumni Registration', 'table_whiteBox2' );
+                    startTableWithForm( 'register_alumni', 'register.php?type=alumni&amp;action=alumni_confirm', 'Alumni Registration', 'table_topBorder' );
+                
+                echo '
+                    <th style="border-bottom:1px solid #cccccc; text-align:left;">
+                        <br><b><font size="+1">Personal</font></b><br>
+                    </th>';
+
                 tableTextInput( 'text', 'fname', 'First Name', 25, $_POST['fname'], $errorCode['fname'], '', true, '^[A-Z][a-z]+' );
                 tableTextInput( 'text', 'lname', 'Last Name', 25, $_POST['lname'], $errorCode['lname'], '', true, '^[A-z-\']+([\s]{1}[A-z-\']+)?$' ); 
-                if( $student )
-                {
-                    echo '<tr>
-                            <td><input type="checkbox" name="argustut" value="yes" ' . ( $_POST['argustut'] == "yes" ? 'checked' : '' ) . ' />&nbsp;&nbsp;&nbsp;<strong><i>Are you now, or have you taken the ARGUS class?</i></strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" name="argusCertificate" value="yes" ' . ( $_POST['arguscertifcate'] == "yes" ? 'checked' : '' ) . ' />&nbsp;&nbsp;&nbsp;<strong><i>Are you ARGUS certified?</i></strong>
-                            </td>
-                        </tr>';
-                }  
-                if( $student )
-                {
-                    echo '<tr>
-                            <td><strong>' . ( ( $errorCode['class'] ) ? '<font color="#FF0000">*Class</font>' : 'Class' ) . '</strong><br />
-                                <select name="class" id="class"><option value=""></option>';    
-                    $year = idate( 'Y' );
-                    for( $i = 0; $i < 4; $i++ )
-                    {
-                        echo '<option value="' . ( $year + $i ) . '" ' . ( ( $_POST['class'] == ( $year + $i ) ) ? 'selected="selected"' : '' ) . ' >' . ( $year + $i ) . '</option>';
-                    }
-                    echo '      </select>
-                            </td>
-                        </tr>';
-                }    
-                if( $_POST['submit'] == 'Edit' )
-                {
-                    $majorValue = getValueFromLabel( $majorOptions, $_POST['major'] );
-                    tableSelectInput( 'major', 'Major/MBA Focus', $majorOptions, $majorValue, $errorCode['major'], '' );
-                }
-                else
-                    tableSelectInput( 'major', 'Major/MBA Focus', $majorOptions, $_POST['major'], $errorCode['major'], '' );
-                echo '<tr>
-                        <td><input type="checkbox" name="undergradmba" value="yes"/>&nbsp;&nbsp;&nbsp;<strong>Are you an MBA student?</strong></td>
-                    </tr>';                          
-                if( $student )
-                    tableCheckboxInput( 'Check the courses you have or are currently taking:', $classesOptions );
-                tableCheckboxInput("Job Functions (Check all that apply): ", $careerTypeList);    
-                if( $_POST['submit'] == 'Edit' )
-                {
-                    $geoPrefValue = getValueFromLabel( $locationOptions, $_POST['geopref'] );
-                    
-                    tableSelectInput( 'geopref', 'Geographical Preference', $locationOptions, $geoPrefValue, $errorCode['geopref'], '' );
-                }
-                else
-                    tableSelectInput( 'geopref', 'Geographical Preference', $locationOptions, $_POST['geopref'],$errorCode['geopref'], '' );
-                tableTextInput( 'text', 'phone', 'Phone', '', $_POST['phone'], $errorCode['phone'], '(xxx-xxx-xxxx)', true, '^[0-9]{3}[-]{1}[0-9]{3}[-]{1}[0-9]{4}$' );
+
                 if( $student )
                 {
                     if( $duplicatePSoft )
@@ -333,6 +281,9 @@
                         tableTextInput( 'text', 'psoftconf', 'Confirm Peoplesoft', '', $_POST['psoftconf'], $errorCode['psoftconf'], '(7-digit numeric)', true, '^[0-9]{7}$' );
                     }
                 }
+
+                tableTextInput( 'text', 'phone', 'Phone', '', $_POST['phone'], $errorCode['phone'], '(xxx-xxx-xxxx)', true, '^[0-9]{3}[-]{1}[0-9]{3}[-]{1}[0-9]{4}$' );
+
                 if( $duplicateEmail )
                     tableTextInput( 'email', 'email', 'E-mail', 30, '', $errorCode['email'], '', true, '' );
                 else
@@ -353,12 +304,83 @@
                     tableTextInput( 'password', 'password', 'Password', '', $_POST['password'], $errorCode['password'], '', true, '^[0-9A-z]{6,15}$' );
                     tableTextInput( 'password', 'cpassword', 'Confirm Password', '', $_POST['cpassword'], $errorCode['cpassword'], '', true, '^[0-9A-z]{6,15}$' );
                 }
+
+                echo '
+                    <th style="border-bottom:1px solid #cccccc; text-align:left;">
+                        <br><b><font size="+1">About</font></b><br>
+                        <i>Please complete the following as they apply to you.</i>
+                    </th>';
+                
+                if( $student )
+                {
+                    echo '<tr>
+                            <td><strong>' . ( ( $errorCode['class'] ) ? '<font color="#FF0000">*Class</font>' : 'Class' ) . '</strong><br />
+                                &nbsp;&nbsp;<select name="class" id="class"><option value=""></option>';    
+                    $year = idate( 'Y' );
+                    for( $i = 0; $i < 4; $i++ )
+                    {
+                        echo '<option value="' . ( $year + $i ) . '" ' . ( ( $_POST['class'] == ( $year + $i ) ) ? 'selected="selected"' : '' ) . ' >' . ( $year + $i ) . '</option>';
+                    }
+                    echo '      </select>
+                            </td>
+                        </tr>';
+                }
+
+                if( $_POST['submit'] == 'Edit' )
+                {
+                    $majorValue = getValueFromLabel( $majorOptions, $_POST['major'] );
+                    tableSelectInput( 'major', 'Major/MBA Focus', $majorOptions, $majorValue, $errorCode['major'], '' );
+                }
+
+                else
+                    tableSelectInput( 'major', 'Major/MBA Focus', $majorOptions, $_POST['major'], $errorCode['major'], '' );
+                
+                echo '<tr>
+                        <td>&nbsp;&nbsp;<input type="checkbox" name="undergradmba" value="yes"/>&nbsp;&nbsp;&nbsp;Are you an MBA student?</td>
+                    </tr>';
+
+                if( $student )
+                {
+                    echo '<tr>
+                            <td>&nbsp;&nbsp;<input type="checkbox" name="argustut" value="yes" ' . ( $_POST['argustut'] == "yes" ? 'checked' : '' ) . ' />&nbsp;&nbsp;&nbsp;Are you now, or have you taken the ARGUS class?
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;&nbsp;<input type="checkbox" name="argusCertificate" value="yes" ' . ( $_POST['arguscertifcate'] == "yes" ? 'checked' : '' ) . ' />&nbsp;&nbsp;&nbsp;Are you ARGUS certified?
+                            </td>
+                        </tr>';
+                }  
+
+                if( $student )
+                    tableCheckboxInput( 'Check the courses you have or are currently taking:', $classesOptions );
+
+                echo '
+                    <th style="border-bottom:1px solid #cccccc; text-align:left;">
+                        <br><b><font size="+1">Job Preferences</font></b><br>
+                        <i>Describe the types of jobs that interest you.</i>
+                    </th>';
+
+                tableCheckboxInput("Job Functions (Check all that apply): ", $careerTypeList);    
+                if( $_POST['submit'] == 'Edit' )
+                {
+                    $geoPrefValue = getValueFromLabel( $locationOptions, $_POST['geopref'] );
+                    
+                    tableSelectInput( 'geopref', 'Geographical Preference', $locationOptions, $geoPrefValue, $errorCode['geopref'], '' );
+                }
+                else
+                    tableSelectInput( 'geopref', 'Geographical Preference', $locationOptions, $_POST['geopref'],$errorCode['geopref'], '' );
+                
+                echo '
+                    <th style="border-bottom:1px solid #cccccc; text-align:left;">
+                        <br><b><font size="+1">Finish Up</font></b><br>
+                    </th>';
+
                 echo '<tr>    
                         <td>';
                 if( !isEmpty( $resp->error ) )
                     echo '<font color="#FF0000"><strong>Incorrect Captcha Code</strong></font><br />';
                 else
-                    echo '<strong><i>Please enter the Captcha code below</i></strong>';
+                    echo '<strong>Please enter the Captcha code below</strong>';
                 echo recaptcha_get_html( $publickey );
                 echo '  </td>
                     </tr>
@@ -376,13 +398,35 @@
             }
             else if( ( $_GET['type'] == 'employer' ) && !$formFilled )
             {
-                startTableWithForm( 'register_employer', 'register.php?type=employer&amp;action=employer_confirm', 'Employer Registration', 'table_whiteBox2' );
+                startTableWithForm( 'register_employer', 'register.php?type=employer&amp;action=employer_confirm', 'Employer Registration', 'table_topBorder' );
+                
+                echo '
+                    <th style="border-bottom:1px solid #cccccc; text-align:left;">
+                        <br><b><font size="+1">Personal</font></b><br>
+                        <i>Please provide some information about yourself.</i>
+                    </th>';
+
                 tableTextInput( 'text', 'fname', 'First Name', 25, $_POST['fname'], $errorCode['fname'], '', true, '^[A-Z][a-z]+' );
                 tableTextInput( 'text', 'lname', 'Last Name', 25, $_POST['lname'], $errorCode['lname'], '', true, '^[A-z-\']+([\s]{1}[A-z-\']+)?$' );
-                tableTextInput( 'text', 'company', 'Company Name', 50, $_POST['company'], $errorCode['company'], '', true, '' );
                 tableTextInput( 'text', 'phone', 'Company Phone', '', $_POST['phone'], $errorCode['phone'], '(xxx-xxx-xxxx)', true, '^[0-9]{3}[-]{1}[0-9]{3}[-]{1}[0-9]{4}$' );
                 tableTextInput( 'email', 'email', 'Company E-mail', 30, '', $errorCode['email'], '', true, '' );
                 tableTextInput( 'email', 'emailconf', 'Confirm Company E-mail', 30, $_POST['emailconf'], $errorCode['emailconf'], '', true, '' );
+
+                echo '<tr>
+                        <td>
+                            <strong><i>Please choose a 6-15 long alphanumeric password for login purposes</i></strong>
+                        </td>
+                    </tr>';
+                tableTextInput( 'password', 'password', 'Password', '', $_POST['password'], $errorCode['password'], '', true, '^[0-9A-z]{6,15}$' );
+                tableTextInput( 'password', 'cpassword', 'Confirm Password', '', $_POST['cpassword'], $errorCode['cpassword'], '', true, '^[0-9A-z]{6,15}$' );
+
+                echo '
+                    <th style="border-bottom:1px solid #cccccc; text-align:left;">
+                        <br><b><font size="+1">Company</font></b><br>
+                        <i>Please provide some information about your company.<br>This information will not be seen by students, but will be used to direct them to you.</i>
+                    </th>';
+
+                tableTextInput( 'text', 'company', 'Company Name', 50, $_POST['company'], $errorCode['company'], '', true, '' );
                 tableTextInput( 'text', 'website', 'Company Website', 30, $_POST['website'], $errorCode['website'], '', true, '' );
                 if( $_POST['submit'] == 'Edit' )
                 {
@@ -392,7 +436,14 @@
                 }
                 else
                     tableSelectInput( 'geo', 'Geographical Location of the job', $locationOptions, $_POST['geo'], $errorCode['geo'], '' );
-                tableCheckboxInput("Job Functions (Check all that apply): ", $careerTypeList);    
+                tableCheckboxInput("Primary Company Focus (Check all that apply): ", $careerTypeList);
+
+                echo '
+                    <th style="border-bottom:1px solid #cccccc; text-align:left;">
+                        <br><b><font size="+1">Job Opening Types</font></b><br>
+                        <i>Indicate the type of positions you are looking to fill.</i>
+                    </th>';
+
                 if( $_POST['submit'] == 'Edit' )
                 {
                     $openingType = getValueFromLabel( $employeeOptions, $_POST['openingtype'] );
@@ -400,7 +451,8 @@
                     tableSelectInput( 'openingtype', 'Job Opening', $employeeOptions, $openingType, $errorCode['openingtype'], '' );
                 }
                 else
-                    tableSelectInput( 'openingtype', 'Job Opening', $employeeOptions, $_POST['openingtype'], $errorCode['openingtype'], '' );  
+                    tableSelectInput( 'openingtype', 'Job Opening', $employeeOptions, $_POST['openingtype'], $errorCode['openingtype'], '' ); 
+
                 if( $_POST['submit'] == 'Edit' )
                 {
                     $experienceType = getValueFromLabel( $employeeOptions, $_POST['experience'] );
@@ -409,13 +461,12 @@
                 }
                 else
                     tableSelectInput( 'experience', 'Necessary Experience (Years)', $experienceOptions, $_POST['experience'], $errorCode['experience'], '' ); 
-                echo '<tr>
-                        <td>
-                            <strong><i>Please choose a 6-15 long alphanumeric password for login purposes</i></strong>
-                        </td>
-                    </tr>';
-                tableTextInput( 'password', 'password', 'Password', '', $_POST['password'], $errorCode['password'], '', true, '^[0-9A-z]{6,15}$' );
-                tableTextInput( 'password', 'cpassword', 'Confirm Password', '', $_POST['cpassword'], $errorCode['cpassword'], '', true, '^[0-9A-z]{6,15}$' );
+                
+                echo '
+                    <th style="border-bottom:1px solid #cccccc; text-align:left;">
+                        <br><b><font size="+1">Finish Up</font></b><br>
+                    </th>';
+
                 echo '<tr>    
                         <td>';
                 if( !isEmpty( $resp->error ) )

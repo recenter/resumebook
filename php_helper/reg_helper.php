@@ -270,7 +270,7 @@
 		echo '
 				<tr>
 					<td><strong>' . ( ( $error ) ? '<font color="#FF0000">*' . $label . '</font>' : $label ) .
-						'</strong><br /><select name="' . $name . '" id="' . $name . '">
+						'</strong><br />&nbsp;&nbsp;<select name="' . $name . '" id="' . $name . '">
 						 <option value=""></option>';
 		
 		for( $x = 0; $x < sizeof( $options ); $x++ )
@@ -292,7 +292,7 @@
 	{		
 		echo '
 				<tr>
-					<td><strong><i>' . $name . '</i></strong><br />';
+					<td><strong>' . $name . '</strong><br />';
 		
 		for( $x = 0; $x < sizeof( $options ); $x++ )
 		{			
@@ -300,7 +300,7 @@
 			$optionValue = $optionsParts[0];
 			$optionLabel = $optionsParts[1];
 			
-			echo '<input type="checkbox" name="' . $optionValue . '" value="yes" ' . ( $_POST[$optionValue] == "yes" ? 'checked' : '' ) . ' />&nbsp;&nbsp;&nbsp;' . $optionLabel . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>';
+			echo '&nbsp;&nbsp;<input type="checkbox" name="' . $optionValue . '" value="yes" ' . ( $_POST[$optionValue] == "yes" ? 'checked' : '' ) . ' />&nbsp;&nbsp;&nbsp;' . $optionLabel . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>';
 		}
 		
 		echo '
