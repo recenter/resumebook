@@ -430,14 +430,17 @@
 			$placement1_companyName = $placement1[0];
 			$placement1_startDate = $placement1[1];
 			$placement1_jobType = $placement1[2];
+			$placement1_jobClass = $placement1[3];
 			$placement2 =  explode( '|', $student['placement2']);
 			$placement2_companyName = $placement2[0];
 			$placement2_startDate = $placement2[1];
 			$placement2_jobType = $placement2[2];
+			$placement2_jobClass = $placement2[3];
 			$placement3 =  explode( '|', $student['placement3']);				
 			$placement3_companyName = $placement3[0];
 			$placement3_startDate = $placement3[1];
 			$placement3_jobType = $placement3[2];
+			$placement3_jobClass = $placement3[3];
 			
 			$majorOptions = array( 0 => 'acct|Accounting', 1 => 'fin|Finance', 2 => 're|Real Estate', 3 => 'mgmt|Management', 4 => 'mark|Marketing', 5 => 'econ|Economics', 6 => 'blaw|Business Law', 7 =>'mba|MBA General', 8=> 'clas|CLAS' );
 	$locationOptions = array( 0 => 'ny|New York', 1 => 'stfrd|Stamford', 2 => 'nh|New Haven', 3 => 'bost|Boston', 4 => 'htfrd|Hartford', 5 => 'nj|New Jersey');//, 6 => 'np|No Preference' );
@@ -502,7 +505,10 @@
 								<strong>Start Date</strong>
 								<input type="text" name="startDate1" value="' . $placement1_startDate . '" size="10" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<strong>Job Type</strong>
-								<input type="text" name="jobType1" value="' . $placement1_jobType . '" size="10" /></td>
+								<input type="text" name="jobType1" value="' . $placement1_jobType . '" size="10" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    			<input type="checkbox" name="jobClass1" value="yes" '.($placement1_jobClass=='1' ? 'checked' : '').'/>
+                    			<strong>Internship?</strong>
+								</td>
 							</tr>							
 							<tr>
 								<td><strong>Company Name</strong>
@@ -510,16 +516,21 @@
 								<strong>Start Date</strong>
 								<input type="text" name="startDate2" value="' . $placement2_startDate . '" size="10" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<strong>Job Type</strong>
-								<input type="text" name="jobType2" value="' . $placement2_jobType . '" size="10" /></td>
+								<input type="text" name="jobType2" value="' . $placement2_jobType . '" size="10" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    			<input type="checkbox" name="jobClass2" value="yes" '.($placement2_jobClass=='1' ? 'checked' : '').'/>
+                    			<strong>Internship?</strong>
+                    			</td>
 							</tr>
-							
 							<tr>
 								<td><strong>Company Name</strong>
 								<input type="text" name="companyName3" value="' . $placement3_companyName . '" size="25" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;						
 								<strong>Start Date</strong>
 								<input type="text" name="startDate3" value="' . $placement3_startDate . '" size="10" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<strong>Job Type</strong>
-								<input type="text" name="jobType3" value="' . $placement3_jobType . '" size="10" /></td>
+								<input type="text" name="jobType3" value="' . $placement3_jobType . '" size="10" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			                    <input type="checkbox" name="jobClass3" value="yes" '.($placement3_jobClass=='1' ? 'checked' : '').'/>
+			                    <strong>Internship?</strong>
+								</td>
 							</tr>
 							<th><h2>Permanent Address</h2></th>
 							<tr>

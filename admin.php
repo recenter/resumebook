@@ -341,7 +341,7 @@
 						$arguscertificate = $_POST['arguscertificate'] == 'yes' ? 1 : 0;
 						$classes =  getClasses( $classesOptions);							
 						$careertype = getCareerTypes($careerTypeList);						
-						$permadd = $_POST['padd'] . ' | ' . $_POST['pcity'] . ' | ' . $_POST['pstate'] . ' | ' . $_POST['pzip'];
+						$permadd = $_POST['padd'] . '|' . $_POST['pcity'] . '|' . $_POST['pstate'] . '|' . $_POST['pzip'];
 						$schooladd = '';
 						$intplcmnt = getIndexFromDelimitedArrayValue( $internshipOptions, $_POST['intplcmnt'] );
 						$majorIndex = getIndexFromDelimitedArrayValue( $majorOptions, $_POST['major'] );
@@ -352,12 +352,12 @@
 						
 						if( !isEmpty( $_POST['sadd'] ) )
 						{
-							$schooladd = $_POST['sadd'] . ' | ' . $_POST['scity'] . ' | ' . $_POST['sstate'] . ' | ' . $_POST['szip'];
+							$schooladd = $_POST['sadd'] . '|' . $_POST['scity'] . '|' . $_POST['sstate'] . '|' . $_POST['szip'];
 						}
 						
-						$pl1 = $_POST['companyName1'] . ' | ' . $_POST['startDate1'] . ' | ' . $_POST['jobType1'];
-						$pl2 = $_POST['companyName2'] . ' | ' . $_POST['startDate2'] . ' | ' . $_POST['jobType2'];
-						$pl3 = $_POST['companyName3'] . ' | ' . $_POST['startDate3'] . ' | ' . $_POST['jobType3'];
+						$pl1 = $_POST['companyName1'].'|'.$_POST['startDate1'].'|'.$_POST['jobType1'].'|'.$jobClass1;
+						$pl2 = $_POST['companyName2'].'|'.$_POST['startDate2'].'|'.$_POST['jobType2'].'|'.$jobClass2;
+						$pl3 = $_POST['companyName3'].'|'.$_POST['startDate3'].'|'.$_POST['jobType3'].'|'.$jobClass3;
 						
 						//echo $_POST['argus'].$_POST['arguscertificate'];
 						

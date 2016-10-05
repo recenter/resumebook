@@ -112,6 +112,9 @@ if (!isLoggedIn()) {
             $placement1_jobType = '';
             $placement2_jobType = '';
             $placement3_jobType = '';
+            $placement1_jobClass = '';
+            $placement2_jobClass = '';
+            $placement3_jobClass = '';
 
             if ($_SESSION['permadd'] != '') {
                 $mba = $_SESSION['mba'];
@@ -135,14 +138,17 @@ if (!isLoggedIn()) {
                 $placement1_companyName = $placement1[0];
                 $placement1_startDate = $placement1[1];
                 $placement1_jobType = $placement1[2];
+                $placement1_jobClass = $placement1[3];
                 $placement2 =  explode('|', $_SESSION['placement2']);
                 $placement2_companyName = $placement2[0];
                 $placement2_startDate = $placement2[1];
                 $placement2_jobType = $placement2[2];
+                $placement2_jobClass = $placement2[3];
                 $placement3 =  explode('|', $_SESSION['placement3']);
                 $placement3_companyName = $placement3[0];
                 $placement3_startDate = $placement3[1];
                 $placement3_jobType = $placement3[2];
+                $placement3_jobClass = $placement3[3];
             }
             echo '
             <br />
@@ -199,6 +205,8 @@ if (!isLoggedIn()) {
                     <strong>Job Type</strong>
                     <input type="text" name="jobType1" value="'.$placement1_jobType.'" size="10">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="checkbox" name="jobClass1" value="yes" '.($placement1_jobClass=='1' ? 'checked' : '').'/>
+                    <strong>Internship?</strong>
                   </td>
                 </tr>
                 <tr>
@@ -211,6 +219,9 @@ if (!isLoggedIn()) {
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <strong>Job Type</strong>
                     <input type="text" name="jobType2" value="'.$placement2_jobType.'" size="10">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="checkbox" name="jobClass2" value="yes" '.($placement2_jobClass=='1' ? 'checked' : '').'/>
+                    <strong>Internship?</strong>
                   </td>
                 </tr>
                 <tr>
@@ -223,6 +234,9 @@ if (!isLoggedIn()) {
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <strong>Job Type</strong>
                     <input type="text" name="jobType3" value="'.$placement3_jobType.'" size="10">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="checkbox" name="jobClass3" value="yes" '.($placement3_jobClass=='1' ? 'checked' : '').'/>
+                    <strong>Internship?</strong>
                   </td>
                 </tr>
                 <th style="border-bottom:1px solid #cccccc;">
@@ -360,9 +374,13 @@ if (!isLoggedIn()) {
             if (!isEmpty( $_POST['sadd']))
                 $schooladd = $_POST['sadd'].'|'.$_POST['scity'].'|'.$_POST['sstate'].'|'.$_POST['szip'];
 
-            $pl1 = $_POST['companyName1'].'|'.$_POST['startDate1'].'|'.$_POST['jobType1'];
-            $pl2 = $_POST['companyName2'].'|'.$_POST['startDate2'].'|'.$_POST['jobType2'];
-            $pl3 = $_POST['companyName3'].'|'.$_POST['startDate3'].'|'.$_POST['jobType3'];
+            $jobClass1 = $_POST['jobClass1'] == 'yes' ? 1 : 0;
+            $jobClass2 = $_POST['jobClass2'] == 'yes' ? 1 : 0;
+            $jobClass3 = $_POST['jobClass3'] == 'yes' ? 1 : 0;
+
+            $pl1 = $_POST['companyName1'].'|'.$_POST['startDate1'].'|'.$_POST['jobType1'].'|'.$jobClass1;
+            $pl2 = $_POST['companyName2'].'|'.$_POST['startDate2'].'|'.$_POST['jobType2'].'|'.$jobClass2;
+            $pl3 = $_POST['companyName3'].'|'.$_POST['startDate3'].'|'.$_POST['jobType3'].'|'.$jobClass3;
 
             // echo $_POST['argus'].$_POST['arguscertificate'];
             // -1 for placed means "leave the placed flag as it is (i.e. don't update it)"
