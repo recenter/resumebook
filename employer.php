@@ -107,19 +107,24 @@ include_once 'php_helper/reg_helper.php';
 						echo '
 							<br />
 							<form name="stprof" id="stprof" method="post" action="employer.php?action=editprof&amp;sub=submit&amp;id=' . $_GET['id'] . '">
-							<table width="100%" class="table_topBorder">';	
-							
+							<table width="100%" class="table_topBorder">
+							<th style="border-bottom:1px solid #cccccc;">
+                  				<br><b><font size="+1">Company Info</font></b><br>
+                			</th>';	
+						
 						tableTextInput( 'text', 'company', 'Company Name', 50, $company, $errorCode['company'], '', true, '' );
 						tableTextInput( 'text', 'phone', 'Company Phone', '', $phone, $errorCode['phone'], '(xxx-xxx-xxxx)', true, '^[0-9]{3}[-]{1}[0-9]{3}[-]{1}[0-9]{4}$' );						
-						tableTextInput( 'text', 'website', 'Company Website', 30, $website, $errorCode['website'], '', true, '' );					
+						tableTextInput( 'text', 'website', 'Company Website', 30, $website, $errorCode['website'], '', true, '' );	
+
+						echo '
+							<th style="border-bottom:1px solid #cccccc;">
+                  				<br><b><font size="+1">Job Opening</font></b><br>
+                			</th>';				
 						
+						tableSelectInput2( 'openingtype', 'Opening Type', $employeeOptions, $openingtype, $errorCode['openingtype'], '' );
+						tableSelectInput2( 'experience', 'Necessary Experience (Years)', $experienceOptions, $experience, $errorCode['experience'], '' );
 						tableSelectInput2( 'geopref', 'Geographical Location of the job', $locationOptions, $geopref, $errorCode['geo'], '' );
-						
-						displayCheckBoxes("Job Functions (Check all that apply):", $careerTypeList, $careertype);							
-						
-						tableSelectInput2( 'openingtype', 'Job Opening', $employeeOptions, $openingtype, $errorCode['openingtype'], '' );							
-						
-						tableSelectInput2( 'experience', 'Necessary Experience (Years)', $experienceOptions, $experience, $errorCode['experience'], '' );						
+						displayCheckBoxes("Job Functions (Check all that apply):", $careerTypeList, $careertype);						
 						
 						echo '
 							<tr>
