@@ -257,7 +257,7 @@
 		
 		$query = "SELECT *
 				  FROM employers
-				  ORDER BY lname";
+				  ORDER BY lastlogin DESC";
 		$result = mssql_query( $query );
 		
 		for( $x = 0; $x < mssql_num_rows( $result ); $x++ )
