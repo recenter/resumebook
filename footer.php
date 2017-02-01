@@ -8,7 +8,7 @@
     Telephone: (860)-486-3227<br />
     Fax: (860)-486-0349<br />
     <b>For Resume Book help, email:</b><br />
-    <a href="mailto:recenter@business.uconn.edu">recenter@business.uconn.edu</a>
+    <a href="mailto:recenter.business@uconn.edu">recenter.business@uconn.edu</a>
 </div>
 </td>
 <td>
