@@ -469,6 +469,7 @@ if (!isLoggedIn()) {
                   <li>completed two Real Estate courses or</li>
                   <li>completed one Real Estate course and be in the process of taking a second.</li>
                 </ul>
+                <br><br><b>Want resume inspiration?</b><br>Printed copies of sample resumes from successful student applicants can be found in the Real Estate Center library.
               </ul>
             </td>
           </tr>
@@ -480,7 +481,8 @@ if (!isLoggedIn()) {
         echo '
             <h4>Please follow this <a href="http://www3.business.uconn.edu/reresume/docs/Resume_template.pdf">
             template</a> to prepare your resume.<br>For best results, make sure to upload your resume as a
-            <font color = blue> PDF DOCUMENT.</font></h4><br />';
+            <font color = blue> PDF DOCUMENT.</font></h4>
+            <b>Want resume inspiration?</b><br>Printed copies of sample resumes from successful student applicants can be found in the Real Estate Center library.<br><br><br>';
         // MAX_FILE_SIZE must precede the file input field
         // Name of input element determines name in $_FILES array
         echo '
