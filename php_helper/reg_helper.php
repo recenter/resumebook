@@ -651,20 +651,17 @@
 	$careerTypeList = array( 0 => 'app|Valuation/Appraisal', 1 => 'bro|Brokerage/Sales (Commercial Property)', 2 => 'Inv|Investments/ Private Equity', 3 => 'Dev|Development', 4 => 'Mar|Marketing', 5 => 'Cou|Counseling', 6 => 'pro|Property Management', 7 => 'op|No Job Function Preference', 8=> 'assetmang|Asset Management', 9=> 'corprealestate|Corporate Real Estate', 10=> 'law|Law', 11=>'lendbank|Banking/Real Estate Lending', 12=> 'structprod|Structured Financial Products/ Mortgage Backed Securities');
 			
 			echo '
-					<table width="100%" class="table_topBorder">
-					<th bgcolor="#CCCCCC"><h2>' . $student['fname'] . ' ' . $student['lname'] . ' (' . ( ( $isStudent ) ? '<i>' . $student['class'] . '</i>' : '<i>Alumni</i>' ) . ') </h2></th>';
+				<table width="100%" class="table_fullBorder">
+					<tr>
+						<td>
+						<h2>' . $student['fname'] . ' ' . $student['lname'] . ' (' . ( ( $isStudent ) ? '<i>' . $student['class'] . '</i>' : '<i>Alumni</i>' ) . ') </h2>';
 			
 			if( $isStudent )
 			{
 				echo'
-					<tr>
-						<td><input type="checkbox" name="argustut" value="yes" onclick="javascript: return false;" ' . ( $student['argus'] ? 'checked' : '' ) . ' />&nbsp;&nbsp;&nbsp;<strong>ARGUS Class</strong><br /></td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" name="arguscertificate" value="yes" onclick="javascript: return false;" ' . ( $student['arguscertificate'] ? 'checked' : '' ) . ' />&nbsp;&nbsp;&nbsp;<strong>ARGUS Certificate</strong><br /></td>
-					</tr>
-					<tr>
-						<td><strong>Real Estate Classes</strong><br />';
+							&nbsp;&nbsp;&nbsp;<input type="checkbox" name="argustut" value="yes" onclick="javascript: return false;" ' . ( $student['argus'] ? 'checked' : '' ) . ' />&nbsp;&nbsp;&nbsp;<strong>ARGUS Class</strong><br />
+							&nbsp;&nbsp;&nbsp;<input type="checkbox" name="arguscertificate" value="yes" onclick="javascript: return false;" ' . ( $student['arguscertificate'] ? 'checked' : '' ) . ' />&nbsp;&nbsp;&nbsp;<strong>ARGUS Certificate</strong><br />
+							<br><strong>Real Estate Classes</strong><br />';
 			
 				if( $student['classes'] == NULL || $student['classes'] == '' )
 					echo '<i>None</i>';
@@ -677,12 +674,9 @@
 						$classname = getValueFromArrayIndex( $classesOptions, $classes[$x] );
 						
 						if( $classname != NULL )
-							echo '<input type="checkbox" name="class" value="yes" onclick="javascript: return false;" checked />&nbsp;&nbsp;&nbsp;' . $classname . '&nbsp;&nbsp;&nbsp;';
+							echo '&nbsp;&nbsp;&nbsp;<input type="checkbox" name="class" value="yes" onclick="javascript: return false;" checked />&nbsp;&nbsp;&nbsp;' . $classname . '<br><br>';
 					}
 				}
-				echo '
-				</td>
-					</tr>';
 			}
 			
 			$class = ( $student['class'] == 0 ? 'Alumni' : $student['class'] );
@@ -690,17 +684,12 @@
 			$geopref = getValueFromArrayIndex( $locationOptions, $student['geopref'] );
 			
 			echo '
-					<tr>
-						<td><strong>Class: </strong>' . $class . '</td>
-					</tr>
-					<tr>
-						<td><strong>Major: </strong>' . $major . '</td>
-					</tr>';
+					<strong>Class: </strong>' . $class . '<br>
+					<br><strong>Major: </strong>' . $major . '<br>';
 			if( $isStudent )
 			{
 				echo '
-				<tr>
-						<td><strong>Job Functions</strong><br />';
+					<br><strong>Job Functions</strong><br />';
 				if( $student['careertype'] == NULL || $student['careertype'] == '' )
 						echo '<i>None</i>';
 				else
@@ -712,39 +701,25 @@
 						$careertypename = getValueFromArrayIndex( $careerTypeList, $careertypes[$x] );
 						
 						if( $careertypename != NULL )
-							echo '<input type="checkbox" name="class" value="yes" onclick="javascript: return false;" checked />&nbsp;&nbsp;&nbsp;' . $careertypename . '&nbsp;&nbsp;&nbsp;';
+							echo '&nbsp;&nbsp;&nbsp;<input type="checkbox" name="class" value="yes" onclick="javascript: return false;" checked />&nbsp;&nbsp;&nbsp;' . $careertypename . '<br>';
 					}
 				}
-				echo '
-				</td>
-					</tr>';
 			}
 					echo '
-					<tr>
-						<td><strong>Geographical Preference: </strong>';
+					<br><strong>Geographical Preference: </strong>';
 					if( $student['geopref'] == '6' )
 						echo '<i>No Preference</i>';
 					else
 					{
 						echo'' . $geopref . '';
 					}
-					echo'
+					echo'<br>
+					<br><strong>Phone: </strong>' . $student['phone'] . '<br>
+					<br><strong>E-mail: </strong>' . $student['email'] . '<br>
+					<br><strong>Resume</strong><br />' . ( $student['resume'] == '' ? '<font color="#FF0000">Resume Not Uploaded</font>' : '<font size="+1"><a href="resumes/index.php?id=' . $id . '">View Resume</a></font>' ) . '
 					</td>
-					   </tr>
-					<tr>
-						<td><strong>Phone: </strong>' . $student['phone'] . '</td>
-					</tr>';
-			
-			echo '
-					<tr>
-						<td><strong>E-mail: </strong>' . $student['email'] . '</td>
-					</tr>
-					<tr>
-						<td><strong>Resume</strong><br />' . ( $student['resume'] == '' ? '<font color="#FF0000">Resume Not Uploaded</font>' : '<font size="+1"><a href="resumes/index.php?id=' . $id . '">View Resume</a></font>' ) . '</td>
-					</tr>
-					</table>';
-					
-			
+				</tr>
+			</table>';
 			
 			if( !is_bool( $result ) )
 				mssql_free_result( $result );
