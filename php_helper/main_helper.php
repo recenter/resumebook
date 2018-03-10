@@ -2,9 +2,9 @@
 
 	$majorOptions = array( 0 => 'acct|Accounting', 1 => 'fin|Finance', 2 => 're|Real Estate', 3 => 'mgmt|Management', 4 => 'mark|Marketing', 5 => 'econ|Economics', 6 => 'blaw|Business Law', 7 =>'mba|MBA General', 8=> 'clas|CLAS' );
 	$locationOptions = array( 0 => 'ny|New York', 1 => 'stfrd|Stamford', 2 => 'nh|New Haven', 3 => 'bost|Boston', 4 => 'htfrd|Hartford', 5 => 'nj|New Jersey');//, 6 => 'np|No Preference' );
-	$classesOptions = array( 0 => 'f3230|Fnce 3230 (Real Estate Principles)', 1 => 'f3332|Fnce 3332 (Real Estate Investments)', 2 => 'f3333|Fnce 3333 (Real Estate Finance)', 3 => 'f3334|Fnce 3334 (GIS Applications in Real Estate Markets)', 4 => 'b3274|BLaw 3274 (Real Estate Law)', 5 => 'f3302|Fnce 3302 (Investements and Security Analysis)', 6 => 'e3439w|Econ 3439W (Urban and Regional Economics)', 7 => 'e2327|Econ 2327 ( Information Technology for Economics)' , 8 => 'f4895|Fnce 4895 (Real Estate Appraisal)');
+	$classesOptions = array( 0 => 'f3230|Fnce 3230 (Real Estate Principles)', 1 => 'f3332|Fnce 3332 (Real Estate Investments)', 2 => 'f3333|Fnce 3333 (Real Estate Finance)', 3 => 'f3334|Fnce 3334 (GIS Applications in Real Estate Markets)', 4 => 'b3274|BLaw 3274 (Real Estate Law)', 5 => 'f3302|Fnce 3302 (Investements and Security Analysis)', 6 => 'e3439w|Econ 3439W (Urban and Regional Economics)', 7 => 'e2327|Econ 2327 (Information Technology for Economics)' , 8 => 'f4895|Fnce 4895 (Real Estate Appraisal)', 9 => 'f3335|Fnce 3335 (Appraisal)', 10 => 'f3336|Fnce 3336 (Real Estate a Practical Approach)');
 	$internshipOptions = array( 0 => 'apval|Appraisal', 1 => 'brok|Brokerage', 2 => 'inv|Investment', 3 => 'mgtfin|Developement', 4 => 'mktan|Marketing', 5 => 'finan|Counseling', 6 => 'pmgmt|Property Management', 7 => 'o|Other' );
-	$employeeOptions = array( 0 => 'int|Internship', 1 => 'ftime|Full Time' );
+	$employeeOptions = array( 0 => 'int|Internship', 1 => 'eftime|Entry Level Full Time', 2 => 'ftime|Full Time' );
 	$experienceOptions = array( 0 => 'na|None', 1 => '123|1-3', 2 => '325|3-5', 3 => '5p|5+', 4 => '10p|10+' );
 	// Structured financial products/ mortgage backed securities
 	$careerTypeList = array( 0 => 'app|Valuation/Appraisal', 1 => 'bro|Brokerage/Sales (Commercial Property)', 2 => 'Inv|Investments/ Private Equity', 3 => 'Dev|Development', 4 => 'Mar|Marketing', 5 => 'Cou|Counseling', 6 => 'pro|Property Management', 7 => 'op|No Job Function Preference', 8=> 'assetmang|Asset Management', 9=> 'corprealestate|Corporate Real Estate', 10=> 'law|Law', 11=>'lendbank|Banking/Real Estate Lending', 12=> 'structprod|Structured Financial Products/ Mortgage Backed Securities');
@@ -439,7 +439,7 @@
 		
 	}
 	
-	function updateStudent($id, $argus, $arguscertificate, $classes, $class, $major, $careertype, $geopref, $phone, $email, $permadd, $schooladd,$placement1, $placement2, $placement3,$hidden, $mba, $placed/*,$employee*/)
+	function updateStudent($id, $argus, $arguscertificate, $classes, $class, $major, $careertype, $geopref, $phone, $email, $permadd, $schooladd,$placement1, $placement2, $placement3,$hidden, $mba, $placed)
 	{
 	//	mssql_query( 'SET IDENTITY_INSERT students ON' );
 	
@@ -457,12 +457,12 @@
 		// don't update placed, leave it the same
 		if($placed == -1) 
 			$query = "UPDATE students
-				  SET argus = '$argus', arguscertificate = '$arguscertificate', class = '$class', classes = '$classes', major = '$major', careertype = '$careertype', geopref = '$geopref', phone = '$phone', email = '$email' , permadd = '$permadd', schooladd = '$schooladd', placement1 = '$placement1', placement2 = '$placement2', placement3 = '$placement3', hidden = '$hidden', mba = '$mba'/*,employee='$employee'*/
+				  SET argus = '$argus', arguscertificate = '$arguscertificate', class = '$class', classes = '$classes', major = '$major', careertype = '$careertype', geopref = '$geopref', phone = '$phone', email = '$email' , permadd = '$permadd', schooladd = '$schooladd', placement1 = '$placement1', placement2 = '$placement2', placement3 = '$placement3', hidden = '$hidden', mba = '$mba'
 				  WHERE id = '$id'";
 		else
 		
 		$query = "UPDATE students
-				  SET argus = '$argus', arguscertificate = '$arguscertificate', class = '$class', classes = '$classes', major = '$major', careertype = '$careertype', geopref = '$geopref', phone = '$phone', email = '$email' , permadd = '$permadd', schooladd = '$schooladd', placement1 = '$placement1', placement2 = '$placement2', placement3 = '$placement3', hidden = '$hidden', mba = '$mba', placed = '$placed'/*,employee='$employee'*/
+				  SET argus = '$argus', arguscertificate = '$arguscertificate', class = '$class', classes = '$classes', major = '$major', careertype = '$careertype', geopref = '$geopref', phone = '$phone', email = '$email' , permadd = '$permadd', schooladd = '$schooladd', placement1 = '$placement1', placement2 = '$placement2', placement3 = '$placement3', hidden = '$hidden', mba = '$mba', placed = '$placed'
 				  WHERE id = '$id'";
 			
 			$result = mssql_query( $query );
@@ -498,7 +498,6 @@
 				updateHidden($hidden);
 				updateMBA($mba);
 				updatePlaced($placed);
-				/*updateEmployee($employee);*/
 			}
 			
 			if( !is_bool( $result ) )
@@ -507,7 +506,7 @@
 				mssql_free_result( $lResult );		
 	}
 	
-	function updateStudent2($id, $argus, $arguscertificate, $classes, $class, $major, $careertype, $geopref, $phone, $email, $permadd, $schooladd,$placement1, $placement2, $placement3,$hidden, $mba, $placed/*,$employee*/)
+	function updateStudent2($id, $argus, $arguscertificate, $classes, $class, $major, $careertype, $geopref, $phone, $email, $permadd, $schooladd,$placement1, $placement2, $placement3,$hidden, $mba, $placed)
 	{
 	//	mssql_query( 'SET IDENTITY_INSERT students ON' );
 	
@@ -525,12 +524,12 @@
 		// don't update placed, leave it the same
 		if($placed == -1) 
 			$query = "UPDATE students
-				  SET argus = '$argus', arguscertificate = '$arguscertificate', class = '$class', classes = '$classes', major = '$major', careertype = '$careertype', geopref = '$geopref', phone = '$phone', email = '$email' , permadd = '$permadd', schooladd = '$schooladd', placement1 = '$placement1', placement2 = '$placement2', placement3 = '$placement3', hidden = '$hidden', mba = '$mba'/*,employee='$employee'*/
+				  SET argus = '$argus', arguscertificate = '$arguscertificate', class = '$class', classes = '$classes', major = '$major', careertype = '$careertype', geopref = '$geopref', phone = '$phone', email = '$email' , permadd = '$permadd', schooladd = '$schooladd', placement1 = '$placement1', placement2 = '$placement2', placement3 = '$placement3', hidden = '$hidden', mba = '$mba'
 				  WHERE id = '$id'";
 		else
 		
 		$query = "UPDATE students
-				  SET argus = '$argus', arguscertificate = '$arguscertificate', class = '$class', classes = '$classes', major = '$major', careertype = '$careertype', geopref = '$geopref', phone = '$phone', email = '$email' , permadd = '$permadd', schooladd = '$schooladd', placement1 = '$placement1', placement2 = '$placement2', placement3 = '$placement3', hidden = '$hidden', mba = '$mba', placed = '$placed'/*,employee='$employee'*/
+				  SET argus = '$argus', arguscertificate = '$arguscertificate', class = '$class', classes = '$classes', major = '$major', careertype = '$careertype', geopref = '$geopref', phone = '$phone', email = '$email' , permadd = '$permadd', schooladd = '$schooladd', placement1 = '$placement1', placement2 = '$placement2', placement3 = '$placement3', hidden = '$hidden', mba = '$mba', placed = '$placed'
 				  WHERE id = '$id'";
 			
 			$result = mssql_query( $query );

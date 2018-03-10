@@ -15,12 +15,12 @@
 		<p>Server is running PHP version '.phpversion().'
 		<form>
 		<br />
-		<h3 style="margin-bottom: -10px;"><a href="admin.php?action=mngst&amp;mode=all">Manage ALL Students</a></h3>
-		<h4><a href="admin.php?action=mngst&amp;mode=visible"><strong>&raquo;</strong> Manage Visible Students ONLY</a></h4><br />
-		<h3 style="margin-bottom: -10px;"><a href="admin.php?action=mngal&amp;mode=all">Manage ALL Alumni</a></h3>
-		<h4><a href="admin.php?action=mngal&amp;mode=visible"><strong>&raquo;</strong> Manage Visible Alumni ONLY</a></h4><br />
-		<h3><a href="admin.php?action=mngemp">Manage Employers</a></h3><br />	
-		<h3><a href="admin.php?action=mngjps">Manage Job Postings</a></h3><br />
+		<h3 style="margin-bottom: -10px;"><a href="admin.php?action=mngst&amp;mode=all">All Students</a></h3>
+		<h4><a href="admin.php?action=mngst&amp;mode=visible"><strong>&raquo;</strong> Visible Students Only</a></h4>
+		<h3 style="margin-bottom: -10px;"><a href="admin.php?action=mngal&amp;mode=all">All Alumni</a></h3>
+		<h4><a href="admin.php?action=mngal&amp;mode=visible"><strong>&raquo;</strong> Visible Alumni Only</a></h4>
+		<h3><a href="admin.php?action=mngemp">Employers</a></h3><br />	
+		<h3><a href="admin.php?action=mngjps">Job Postings</a></h3><br />
 		</form>';
 	}	
 
@@ -31,6 +31,7 @@
 
 		if($mode == 'all')
 		{
+			echo '<h1>All Students</h1><br />';
 			$query = "SELECT *
 					  FROM students
 					  WHERE class <> 0 AND class >= '$currentYear' AND hidden <= 1
@@ -38,6 +39,7 @@
 		}
 		else
 		{
+			echo '<h1>Visible Students Only</h1><br />';
 			$query = "SELECT *
 					  FROM students
 					  WHERE class <> 0 AND class >= '$currentYear' AND hidden <= 0
@@ -145,7 +147,7 @@
 		
 		if($mode == 'all')
 		{		
-			echo '<h1>All Alumni</h1><hr><br />';
+			echo '<h1>All Alumni</h1><br />';
 			$query = "SELECT *
 					  FROM students
 					  WHERE (class = 0 OR class < '$currentYear') AND hidden <= 1
@@ -153,7 +155,7 @@
 		}
 		else
 		{
-			echo '<h1>Visible Alumni Only</h1><hr><br />';
+			echo '<h1>Visible Alumni Only</h1><br />';
 			$query = "SELECT *
 					  FROM students
 					  WHERE (class = 0 OR class < '$currentYear') AND hidden <= 0
@@ -247,7 +249,7 @@
 	
 	function displayEmployers( )
 	{
-		echo '<h1>Employers Manager</h1><br />';
+		echo '<h1>Employers</h1><br />';
 		
 		echo '<table width="100%" class="table_fullBorder">';
 		
@@ -255,7 +257,7 @@
 		
 		$query = "SELECT *
 				  FROM employers
-				  ORDER BY lname";
+				  ORDER BY lastlogin DESC";
 		$result = mssql_query( $query );
 		
 		for( $x = 0; $x < mssql_num_rows( $result ); $x++ )
@@ -409,7 +411,6 @@
 			$isStudent = ( $student['class'] == 0 ? false : true );
 			$mba = $student['mba'];
 			$hidden = $student['hidden'];
-			/*$employee = $student['employee'];*/
 			$studentPlaced = $student['placed'];
 			$argus = $student['argus'];
 			$arguscertificate = $student['arguscertificate'];					
@@ -431,72 +432,68 @@
 			$placement1_companyName = $placement1[0];
 			$placement1_startDate = $placement1[1];
 			$placement1_jobType = $placement1[2];
+			$placement1_jobClass = $placement1[3];
 			$placement2 =  explode( '|', $student['placement2']);
 			$placement2_companyName = $placement2[0];
 			$placement2_startDate = $placement2[1];
 			$placement2_jobType = $placement2[2];
+			$placement2_jobClass = $placement2[3];
 			$placement3 =  explode( '|', $student['placement3']);				
 			$placement3_companyName = $placement3[0];
 			$placement3_startDate = $placement3[1];
 			$placement3_jobType = $placement3[2];
+			$placement3_jobClass = $placement3[3];
 			
 			$majorOptions = array( 0 => 'acct|Accounting', 1 => 'fin|Finance', 2 => 're|Real Estate', 3 => 'mgmt|Management', 4 => 'mark|Marketing', 5 => 'econ|Economics', 6 => 'blaw|Business Law', 7 =>'mba|MBA General', 8=> 'clas|CLAS' );
 	$locationOptions = array( 0 => 'ny|New York', 1 => 'stfrd|Stamford', 2 => 'nh|New Haven', 3 => 'bost|Boston', 4 => 'htfrd|Hartford', 5 => 'nj|New Jersey');//, 6 => 'np|No Preference' );
-	$classesOptions = array( 0 => 'f3230|Fnce 3230 (Real Estate Principles)', 1 => 'f3332|Fnce 3332 (Real Estate Investments)', 2 => 'f3333|Fnce 3333 (Real Estate Finance)', 3 => 'f3334|Fnce 3334 (GIS Applications in Real Estate Markets)', 4 => 'b3274|BLaw 3274 (Real Estate Law)', 5 => 'f3302|Fnce 3302 (Investements and Security Analysis)', 6 => 'e3439w|Econ 3439W (Urban and Regional Economics)', 7 => 'e2327|Econ 2327 ( Information Technology for Economics)' , 8 => 'f4895|Fnce 4895 (Real Estate Appraisal)');		
+	$classesOptions = array( 0 => 'f3230|Fnce 3230 (Real Estate Principles)', 1 => 'f3332|Fnce 3332 (Real Estate Investments)', 2 => 'f3333|Fnce 3333 (Real Estate Finance)', 3 => 'f3334|Fnce 3334 (GIS Applications in Real Estate Markets)', 4 => 'b3274|BLaw 3274 (Real Estate Law)', 5 => 'f3302|Fnce 3302 (Investements and Security Analysis)', 6 => 'e3439w|Econ 3439W (Urban and Regional Economics)', 7 => 'e2327|Econ 2327 (Information Technology for Economics)' , 8 => 'f4895|Fnce 4895 (Real Estate Appraisal)', 9 => 'f3335|Fnce 3335 (Appraisal)', 10 => 'f3336|Fnce 3336 (Real Estate a Practical Approach)');		
 	$careerTypeList = array( 0 => 'app|Valuation/Appraisal', 1 => 'bro|Brokerage/Sales (Commercial Property)', 2 => 'Inv|Investments/ Private Equity', 3 => 'Dev|Development', 4 => 'Mar|Marketing', 5 => 'Cou|Counseling', 6 => 'pro|Property Management', 7 => 'op|No Job Function Preference', 8=> 'assetmang|Asset Management', 9=> 'corprealestate|Corporate Real Estate', 10=> 'law|Law', 11=>'lendbank|Lending/Banking', 11=> 'structprod|Structured Financial Products/ Mortgage Backed Securities');
 	
-	echo '
-						<table width="100%">
+						echo '
+						<table width="100%" class="table_topBorder">
 							<tr>
-								<td><h2>'.$student['fname'] . ' ' . $student['lname'] . '</h2>
-								<a href="admin.php?action=mngst&amp;mode=all">< Back</a></td>
-							</tr>
-						</table>';
-	
-			echo '
-							<br />
-							<form name="stprof" id="stprof" method="post" action="admin.php?action=editprof&amp;sub=submit&amp;id=' . $id . '">
-							<table width="100%" class="table_topBorder">
-							<tr>
-								<td>&nbsp;&nbsp;<input type="checkbox" name="profileHidden" value="yes" ' . ( $hidden == "1" ? 'checked' : '' ) . ' />&nbsp;&nbsp;&nbsp;<strong><font color="#FF0000">Hide profile from employers search</font></strong></td>
-							</tr>
-							<tr>
-								<td>&nbsp;&nbsp;<input type="checkbox" name="isemployee" value="yes" ' . ( $employee == "1" ? 'checked' : '' ) . ' />&nbsp;&nbsp;&nbsp;<strong>RECenter Employee</strong></td>
-							</tr>
-								<td>&nbsp;&nbsp;<input type="checkbox" name="studentPlaced" value="yes" ' . ( $studentPlaced == "1" ? 'checked' : '' ) . ' />&nbsp;&nbsp;&nbsp;<strong><font color="#0000FF">Student is placed</font></strong></td>
-							</tr>
-							<tr>
-								<td>&nbsp;&nbsp;<input type="checkbox" name="argustut" value="yes" ' . ( $argus == "1" ? 'checked' : '' ) . ' />&nbsp;&nbsp;&nbsp;<strong>Student is taking or has taken the ARGUS class</strong></td>
-							</tr>
-							<tr>
-								<td>&nbsp;&nbsp;<input type="checkbox" name="arguscertificate" value="yes" ' . ( $arguscertificate == "1" ? 'checked' : '' ) . ' />&nbsp;&nbsp;&nbsp;<strong>Student is ARGUS certified</strong></td>
-							</tr>';						
-							
-							
-							if( $student['class'] != 0 )
-							{
-								echo 
-								'<tr>
-									<td><strong>Class</strong><br />
-									<input type="text" name="class" value="' . $class . '" size="25" /></td>
-								</tr>';	
-								displayCheckBoxes("Check the courses you have or are currently taking:",$classesOptions,$classes);								
-							}
-											
-							tableSelectInput2( 'major', 'Major', $majorOptions, $major, NULL );
-							
-							echo '
-								<tr>
-									<td><input type="checkbox" name="undergradOrMBA" value="yes" ' . ( $mba == "1" ? 'checked' : '' ) . ' />&nbsp;&nbsp;&nbsp;<strong><i>Are you MBA student?</i></strong></td>
-								</tr>';
-							
-							displayCheckBoxes("Job Functions (Check all that apply):", $careerTypeList, $careertype);				
-							
-							tableSelectInput2( 'geopref', 'Geographical Preference', $locationOptions, $geopref, NULL );
-							tableTextInput( 'text', 'phone', 'Phone', '', $phone, $errorCode['phone'], '(xxx-xxx-xxxx)', true, '^[0-9]{3}[-]{1}[0-9]{3}[-]{1}[0-9]{4}$' );
-							tableTextInput( 'email', 'email', 'E-mail', 30, $email, $errorCode['email'], '', true, '' );
+								<td><h2>'.$student['fname'] . ' ' . $student['lname'] . '</h2>';
 
-							echo '
+						if($class == 0 || $class < date('Y'))
+							echo'<a href="admin.php?action=mngal&amp;mode=all">< Back</a></td>';
+						else
+							echo'<a href="admin.php?action=mngst&amp;mode=all">< Back</a></td>';
+
+						echo '	
+							</tr>
+						</table>
+						<form name="stprof" id="stprof" method="post" action="admin.php?action=editprof&amp;sub=submit&amp;id=' . $id . '">
+						<table width="100%" class="table_topBorder">
+							<tr>
+								<td>&nbsp;&nbsp;<input type="checkbox" name="profileHidden" value="yes" ' . ( $hidden == "1" ? 'checked' : '' ) . ' />&nbsp;&nbsp;&nbsp;<font color="#FF0000">Hide profile from employers search</font></td>
+							</tr>
+							<th style="border-bottom:1px solid #cccccc;">
+                  				<br><b><font size="+1">About</font></b><br>
+                			</th>
+							<tr>
+								<td>&nbsp;&nbsp;<input type="checkbox" name="studentPlaced" value="yes" ' . ( $studentPlaced == "1" ? 'checked' : '' ) . ' />&nbsp;&nbsp;&nbsp;Student is placed</td>
+							</tr>
+							<tr>
+								<td>&nbsp;&nbsp;<input type="checkbox" name="argustut" value="yes" ' . ( $argus == "1" ? 'checked' : '' ) . ' />&nbsp;&nbsp;&nbsp;Student is taking or has taken the ARGUS class</td>
+							</tr>
+							<tr>
+								<td>&nbsp;&nbsp;<input type="checkbox" name="arguscertificate" value="yes" ' . ( $arguscertificate == "1" ? 'checked' : '' ) . ' />&nbsp;&nbsp;&nbsp;Student is ARGUS certified</td>
+							</tr>
+							<tr>
+								<td>&nbsp;&nbsp;<input type="checkbox" name="undergradOrMBA" value="yes" ' . ( $mba == "1" ? 'checked' : '' ) . ' />&nbsp;&nbsp;&nbsp;MBA student</td>
+							</tr>';
+
+						tableSelectInput2( 'major', 'Major', $majorOptions, $major, NULL );
+
+						echo '
+							<th style="border-bottom:1px solid #cccccc;">
+                  				<br><b><font size="+1">Job Perferences & History</font></b><br>
+                			</th>';
+
+						displayCheckBoxes("Desired Job Functions:", $careerTypeList, $careertype);
+						tableSelectInput2( 'geopref', 'Geographical Preference', $locationOptions, $geopref, NULL );
+
+						echo '
 							
 							<th><h2>Placement (most recent first)</h2></th>
 							<tr>
@@ -505,7 +502,10 @@
 								<strong>Start Date</strong>
 								<input type="text" name="startDate1" value="' . $placement1_startDate . '" size="10" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<strong>Job Type</strong>
-								<input type="text" name="jobType1" value="' . $placement1_jobType . '" size="10" /></td>
+								<input type="text" name="jobType1" value="' . $placement1_jobType . '" size="10" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    			<input type="checkbox" name="jobClass1" value="yes" '.($placement1_jobClass=='1' ? 'checked' : '').'/>
+                    			<strong>Internship?</strong>
+								</td>
 							</tr>							
 							<tr>
 								<td><strong>Company Name</strong>
@@ -513,34 +513,47 @@
 								<strong>Start Date</strong>
 								<input type="text" name="startDate2" value="' . $placement2_startDate . '" size="10" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<strong>Job Type</strong>
-								<input type="text" name="jobType2" value="' . $placement2_jobType . '" size="10" /></td>
+								<input type="text" name="jobType2" value="' . $placement2_jobType . '" size="10" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    			<input type="checkbox" name="jobClass2" value="yes" '.($placement2_jobClass=='1' ? 'checked' : '').'/>
+                    			<strong>Internship?</strong>
+                    			</td>
 							</tr>
-							
 							<tr>
 								<td><strong>Company Name</strong>
 								<input type="text" name="companyName3" value="' . $placement3_companyName . '" size="25" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;						
 								<strong>Start Date</strong>
 								<input type="text" name="startDate3" value="' . $placement3_startDate . '" size="10" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<strong>Job Type</strong>
-								<input type="text" name="jobType3" value="' . $placement3_jobType . '" size="10" /></td>
+								<input type="text" name="jobType3" value="' . $placement3_jobType . '" size="10" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			                    <input type="checkbox" name="jobClass3" value="yes" '.($placement3_jobClass=='1' ? 'checked' : '').'/>
+			                    <strong>Internship?</strong>
+								</td>
 							</tr>
+							<th style="border-bottom:1px solid #cccccc;">
+                  					<br><b><font size="+1">Personal</font></b><br>
+                			</th>';
+
+						tableTextInput( 'text', 'phone', 'Phone', '', $phone, $errorCode['phone'], '(xxx-xxx-xxxx)', true, '^[0-9]{3}[-]{1}[0-9]{3}[-]{1}[0-9]{4}$' );
+						tableTextInput( 'email', 'email', 'E-mail', 30, $email, $errorCode['email'], '', true, '' );
+							
+						echo '
 							<th><h2>Permanent Address</h2></th>
 							<tr>
 								<td><strong>Address</strong><br />
-								<input type="text" name="padd" value="' . $permadd_add . '" size="50" /></td>
+								&nbsp;&nbsp;<input type="text" name="padd" value="' . $permadd_add . '" size="50" /></td>
 							</tr>
 							<tr>
 
 								<td><strong>City</strong><br />
-								<input type="text" name="pcity" value="' . $permadd_city . '" size="10" /></td>
+								&nbsp;&nbsp;<input type="text" name="pcity" value="' . $permadd_city . '" size="10" /></td>
 							</tr>
 							<tr>
 								<td><strong>State</strong><br />
-								<input type="text" name="pstate" value="' . $permadd_state . '" size="2" /></td>
+								&nbsp;&nbsp;<input type="text" name="pstate" value="' . $permadd_state . '" size="2" /></td>
 							</tr>
 							<tr>
 								<td><strong>Zip Code</strong><br />
-								<input type="text" name="pzip" value="' . $permadd_zip . '" size="5" /></td>
+								&nbsp;&nbsp;<input type="text" name="pzip" value="' . $permadd_zip . '" size="5" /></td>
 							</tr>';
 						
 						if( $student['class'] != 0 )
@@ -549,6 +562,38 @@
 							$schooladd_city = '';
 							$schooladd_state = '';
 							$schooladd_zip = '';
+
+						if( $student['class'] != 0 && $student['class'] >= date('Y') )
+							{
+								echo '
+								<th style="border-bottom:1px solid #cccccc;">
+                  					<br><b><font size="+1">Student Info</font></b><br>
+                				</th>
+								<tr>
+									<td><strong>Class</strong><br />
+									&nbsp;&nbsp;<input type="text" name="class" value="' . $class . '" size="25" /></td>
+								</tr>';	
+								displayCheckBoxes("Check the courses you have or are currently taking:",$classesOptions,$classes);
+
+								echo '
+								<th><h2>School Address</h2></th>
+								<tr>
+									<td><strong>Address</strong><br />
+									&nbsp;&nbsp;<input type="text" name="sadd" value="' . $schooladd_add . '" size="50" /></td>
+								</tr>
+								<tr>
+									<td><strong>City</strong><br />
+									&nbsp;&nbsp;<input type="text" name="scity" value="' . $schooladd_city . '" size="10" /></td>
+								</tr>
+								<tr>
+									<td><strong>State</strong><br />
+									&nbsp;&nbsp;<input type="text" name="sstate" value="' . $schooladd_state . '" size="2" /></td>
+								</tr>
+								<tr>
+									<td><strong>Zip Code</strong><br />
+									&nbsp;&nbsp;<input type="text" name="szip" value="' . $schooladd_zip . '" size="5" /></td>
+								</tr>';								
+							}
 						
 							if( $student['schooladd'] != '' )
 							{
@@ -559,25 +604,6 @@
 								$schooladd_zip = $sadd[3];
 							}
 							
-							echo '<tr>
-							</tr>
-							<th><h2>School Address</h2></th>
-							<tr>
-								<td><strong>Address</strong><br />
-								<input type="text" name="sadd" value="' . $schooladd_add . '" size="50" /></td>
-							</tr>
-							<tr>
-								<td><strong>City</strong><br />
-								<input type="text" name="scity" value="' . $schooladd_city . '" size="10" /></td>
-							</tr>
-							<tr>
-								<td><strong>State</strong><br />
-								<input type="text" name="sstate" value="' . $schooladd_state . '" size="2" /></td>
-							</tr>
-							<tr>
-								<td><strong>Zip Code</strong><br />
-								<input type="text" name="szip" value="' . $schooladd_zip . '" size="5" /></td>
-							</tr>';
 						}
 						/*
 						$intplcmnt = getValueFromArrayIndex( $internshipOptions, $_SESSION['intplcmnt'] );
@@ -586,7 +612,7 @@
 						
 						echo '
 							<tr>
-								<td><input type="submit" name="submit" class="loginButton" value="Save Changes" /></td>
+								<td><br><input type="submit" name="submit" class="loginButton" value="Save Changes" /></td>
 							</tr>
 							</table>
 							</form>';
@@ -613,24 +639,18 @@
 						}
 						else if( $user['approved'] == 2 )
 						{
-							echo '<br /><font color="#FF0000"><strong><i>Rejected</i></strong></font>&nbsp;&nbsp;&nbsp;<form name="approve" id="approve" method="post" class="loginButton" action="admin.php?action=approve&amp;id=' . $id . '">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" name="submit" class="loginButton" value="Approve" /></form>&nbsp;&nbsp;&nbsp;<form name="delst" id="delst" method="post" action="admin.php?action=delete&amp;id=' . $id . '">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" name="submit" class="loginButton" value="Delete Student" /></form>';
+							echo '<hr><br />Status: <font color="#FF0000"><strong><i>Rejected</i></strong></font><br>&nbsp;&nbsp;&nbsp;<form name="approve" id="approve" method="post" class="loginButton" action="admin.php?action=approve&amp;id=' . $id . '">&nbsp;&nbsp;<input type="submit" name="submit" class="loginButton" value="Approve" /></form>&nbsp;&nbsp;&nbsp;<form name="delst" id="delst" method="post" action="admin.php?action=delete&amp;id=' . $id . '">&nbsp;&nbsp;<input type="submit" name="submit" class="loginButton" value="Delete Student" /></form>';
 						}
 						else if( $user['approved'] == 1 )
 						{
-							echo '<br /><font color="#347C17"><strong><i>Approved</i></strong></font><hr>&nbsp;&nbsp;&nbsp;<form name="approve" id="approve" method="post" action="admin.php?action=approve&amp;id=' . $id . '">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" name="submit" class="loginButton" value="Reject" /></form>&nbsp;&nbsp;&nbsp;<form name="delst" id="delst" method="post" action="admin.php?action=delete&amp;id=' . $id . '">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" class="loginButton" name="submit" value="Delete Student" /></form>';
+							echo '<hr><br />Status: <font color="#347C17"><strong><i>Approved</i></strong></font><br>&nbsp;&nbsp;&nbsp;<form name="approve" id="approve" method="post" action="admin.php?action=approve&amp;id=' . $id . '">&nbsp;&nbsp;<input type="submit" name="submit" class="loginButton" value="Reject" /></form>&nbsp;&nbsp;&nbsp;<form name="delst" id="delst" method="post" action="admin.php?action=delete&amp;id=' . $id . '">&nbsp;&nbsp;<input type="submit" class="loginButton" name="submit" value="Delete Student" /></form>';
 						}
 						
 						if( !is_bool( $result ) )
 							mssql_free_result( $result );
-							
-							die();
-	
 		}
-		
-		
-		
-	}
 	
+	}
 	
 	// read only fields
 	function displayStudentProfile( $id )
@@ -655,7 +675,7 @@
 			
 			$majorOptions = array( 0 => 'acct|Accounting', 1 => 'fin|Finance', 2 => 're|Real Estate', 3 => 'mgmt|Management', 4 => 'mark|Marketing', 5 => 'econ|Economics', 6 => 'blaw|Business Law' );
 	$locationOptions = array( 0 => 'ny|New York', 1 => 'stfrd|Stamford', 2 => 'nh|New Haven', 3 => 'bost|Boston', 4 => 'htfrd|Hartford', 5 => 'nj|New Jersey');//, 6 => 'np|No Preference' );
-	$classesOptions = array( 0 => 'f3230|Fnce 3230 (Real Estate Principles)', 1 => 'f3332|Fnce 3332 (Real Estate Investments)', 2 => 'f3333|Fnce 3333 (Real Estate Finance)', 3 => 'f3334|Fnce 3334 (GIS Applications in Real Estate Markets)', 4 => 'b3274|BLaw 3274 (Real Estate Law)', 5 => 'f3302|Fnce 3302 (Investements and Security Analysis)', 6 => 'e3439w|Econ 3439W (Urban and Regional Economics)', 7 => 'e2327|Econ 2327 ( Information Technology for Economics)' , 8 => 'f4895|Fnce 4895 (Real Estate Appraisal)');		
+	$classesOptions = array( 0 => 'f3230|Fnce 3230 (Real Estate Principles)', 1 => 'f3332|Fnce 3332 (Real Estate Investments)', 2 => 'f3333|Fnce 3333 (Real Estate Finance)', 3 => 'f3334|Fnce 3334 (GIS Applications in Real Estate Markets)', 4 => 'b3274|BLaw 3274 (Real Estate Law)', 5 => 'f3302|Fnce 3302 (Investements and Security Analysis)', 6 => 'e3439w|Econ 3439W (Urban and Regional Economics)', 7 => 'e2327|Econ 2327 (Information Technology for Economics)' , 8 => 'f4895|Fnce 4895 (Real Estate Appraisal)', 9 => 'f3335|Fnce 3335 (Appraisal)', 10 => 'f3336|Fnce 3336 (Real Estate a Practical Approach)');		
 	$careerTypeList = array( 0 => 'app|Valuation/Appraisal', 1 => 'bro|Brokerage/Sales (Commercial Property)', 2 => 'Inv|Investments/ Private Equity', 3 => 'Dev|Development', 4 => 'Mar|Marketing', 5 => 'Cou|Counseling', 6 => 'pro|Property Management', 7 => 'op|No Job Function Preference', 8=> 'assetmang|Asset Management', 9=> 'corprealestate|Corporate Real Estate', 10=> 'law|Law', 11=>'lendbank|Lending/Banking', 11=> 'structprod|Structured Financial Products/ Mortgage Backed Securities');
 		/*	
 			$majorOptions = array( 0 => 'acct|Accounting', 1 => 'fin|Finance', 2 => 're|Real Estate', 3 => 'mgmt|Management', 4 => 'mark|Marketing', 5 => 'econ|Economics', 6 => 'blaw|Business Law' );
@@ -823,35 +843,43 @@
 			echo '
 				<br />
 				<form name="stprof" id="stprof" method="post" action="admin.php?action=editeEmpProf&amp;sub=submit&amp;id=' . $id . '">
-				<table width="100%" class="table_topBorder">';	
-				
-			echo '<th><h2>' . $employer['fname'] . ' ' . $employer['lname'] .'</h2></th>';
+				<table width="100%" class="table_topBorder">
+				<th><h2>' . $employer['fname'] . ' ' . $employer['lname'] .'</h2></th>
+				<tr>
+					<td><a href="admin.php?action=mngemp&amp;mode=all">< Back</a></td>
+				</tr>
+				<th style="border-bottom:1px solid #cccccc;">
+                	<br><b><font size="+1">Company Info</font></b><br>
+                </th>';
 				
 			tableTextInput( 'text', 'company', 'Company Name', 50, $company, $errorCode['company'], '', true, '' );
 			tableTextInput( 'text', 'phone', 'Company Phone', '', $phone, $errorCode['phone'], '(xxx-xxx-xxxx)', true, '^[0-9]{3}[-]{1}[0-9]{3}[-]{1}[0-9]{4}$' );						
 			tableTextInput( 'text', 'website', 'Company Website', 30, $website, $errorCode['website'], '', true, '' );	
-			tableTextInput( 'text', 'email', 'Company E-mail', 30, $email, $errorCode['email'], '', true, '' );	
-			
+			tableTextInput( 'text', 'email', 'Company Contact E-mail', 30, $email, $errorCode['email'], '', true, '' );
+
+			echo '
+				<th style="border-bottom:1px solid #cccccc;">
+                	<br><b><font size="+1">Job Opening</font></b><br>
+                </th>';	
+
 			$majorOptions = array( 0 => 'acct|Accounting', 1 => 'fin|Finance', 2 => 're|Real Estate', 3 => 'mgmt|Management', 4 => 'mark|Marketing', 5 => 'econ|Economics', 6 => 'blaw|Business Law', 7 =>'mba|MBA General', 8=> 'clas|CLAS' );
 	$locationOptions = array( 0 => 'ny|New York', 1 => 'stfrd|Stamford', 2 => 'nh|New Haven', 3 => 'bost|Boston', 4 => 'htfrd|Hartford', 5 => 'nj|New Jersey');//, 6 => 'np|No Preference' );
-	$classesOptions = array( 0 => 'f3230|Fnce 3230 (Real Estate Principles)', 1 => 'f3332|Fnce 3332 (Real Estate Investments)', 2 => 'f3333|Fnce 3333 (Real Estate Finance)', 3 => 'f3334|Fnce 3334 (GIS Applications in Real Estate Markets)', 4 => 'b3274|BLaw 3274 (Real Estate Law)', 5 => 'f3302|Fnce 3302 (Investements and Security Analysis)', 6 => 'e3439w|Econ 3439W (Urban and Regional Economics)', 7 => 'e2327|Econ 2327 ( Information Technology for Economics)' , 8 => 'f4895|Fnce 4895 (Real Estate Appraisal)');	
+	$classesOptions = array( 0 => 'f3230|Fnce 3230 (Real Estate Principles)', 1 => 'f3332|Fnce 3332 (Real Estate Investments)', 2 => 'f3333|Fnce 3333 (Real Estate Finance)', 3 => 'f3334|Fnce 3334 (GIS Applications in Real Estate Markets)', 4 => 'b3274|BLaw 3274 (Real Estate Law)', 5 => 'f3302|Fnce 3302 (Investements and Security Analysis)', 6 => 'e3439w|Econ 3439W (Urban and Regional Economics)', 7 => 'e2327|Econ 2327 (Information Technology for Economics)' , 8 => 'f4895|Fnce 4895 (Real Estate Appraisal)', 9 => 'f3335|Fnce 3335 (Appraisal)', 10 => 'f3336|Fnce 3336 (Real Estate a Practical Approach)');	
 	$internshipOptions = array( 0 => 'apval|Appraisal', 1 => 'brok|Brokerage', 2 => 'inv|Investment', 3 => 'mgtfin|Developement', 4 => 'mktan|Marketing', 5 => 'finan|Counseling', 6 => 'pmgmt|Property Management', 7 => 'o|Other' );
-	$employeeOptions = array( 0 => 'int|Internship', 1 => 'ftime|Full Time' );
+	$employeeOptions = array( 0 => 'int|Internship', 1 => 'eftime|Entry Level Full Time', 2 => 'ftime|Full Time' );
 	$experienceOptions = array( 0 => 'na|None', 1 => '123|1-3', 2 => '325|3-5', 3 => '5p|5+', 4 => '10p|10+' );
 	// Structured financial products/ mortgage backed securities
-	$careerTypeList = array( 0 => 'app|Valuation/Appraisal', 1 => 'bro|Brokerage/Sales (Commercial Property)', 2 => 'Inv|Investments/ Private Equity', 3 => 'Dev|Development', 4 => 'Mar|Marketing', 5 => 'Cou|Counseling', 6 => 'pro|Property Management', 7 => 'op|No Job Function Preference', 8=> 'assetmang|Asset Management', 9=> 'corprealestate|Corporate Real Estate', 10=> 'law|Law', 11=>'lendbank|Banking/Real Estate Lending', 12=> 'structprod|Structured Financial Products/ Mortgage Backed Securities');			
+	$careerTypeList = array( 0 => 'app|Valuation/Appraisal', 1 => 'bro|Brokerage/Sales (Commercial Property)', 2 => 'Inv|Investments/ Private Equity', 3 => 'Dev|Development', 4 => 'Mar|Marketing', 5 => 'Cou|Counseling', 6 => 'pro|Property Management', 7 => 'op|No Job Function Preference', 8=> 'assetmang|Asset Management', 9=> 'corprealestate|Corporate Real Estate', 10=> 'law|Law', 11=>'lendbank|Banking/Real Estate Lending', 12=> 'structprod|Structured Financial Products/ Mortgage Backed Securities');
 			
+			tableSelectInput2( 'openingtype', 'Opening Type', $employeeOptions, $openingtype, $errorCode['openingtype'], '' );
+			tableSelectInput2( 'experience', 'Necessary Experience (Years)', $experienceOptions, $experience, $errorCode['experience'], '' );
 			tableSelectInput2( 'geopref', 'Geographical Location of the job', $locationOptions, $geopref, $errorCode['geo'], '' );
-			
-			displayCheckBoxes("Job Functions (Check all that apply):", $careerTypeList, $careertype);							
-			
-			tableSelectInput2( 'openingtype', 'Job Opening', $employeeOptions, $openingtype, $errorCode['openingtype'], '' );							
-			
-			tableSelectInput2( 'experience', 'Necessary Experience (Years)', $experienceOptions, $experience, $errorCode['experience'], '' );						
+
+			displayCheckBoxes("Job Functions (Check all that apply):", $careerTypeList, $careertype);													
 						
 			echo '
 			<tr>
-				<td><input type="submit" name="submit" class="loginButton" value="Save Changes" /></td>
+				<td><br><input type="submit" name="submit" class="loginButton" value="Save Changes" /></td>
 			</tr>
 			</table>
 			</form>';
@@ -868,11 +896,11 @@
 			}
 			else if( $user['approved'] == 2 )
 			{
-				echo '<br /><font color="#FF0000"><strong><i>Rejected</i></strong></font>&nbsp;&nbsp;&nbsp;<form name="approve" id="approve" method="post" action="admin.php?action=approve&amp;empid=' . $id . '">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" name="submit" class="loginButton" value="Approve" /></form>&nbsp;&nbsp;&nbsp;<form name="delst" id="delst" method="post" action="admin.php?action=delete&amp;empid=' . $id . '">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" name="submit" class="loginButton" value="Delete Employer" /></form>';
+				echo '<hr><br />Status: <font color="#FF0000"><strong><i>Rejected</i></strong></font><br>&nbsp;&nbsp;&nbsp;<form name="approve" id="approve" method="post" action="admin.php?action=approve&amp;empid=' . $id . '">&nbsp;&nbsp;<input type="submit" name="submit" class="loginButton" value="Approve" /></form>&nbsp;&nbsp;&nbsp;<form name="delst" id="delst" method="post" action="admin.php?action=delete&amp;empid=' . $id . '">&nbsp;&nbsp;<input type="submit" name="submit" class="loginButton" value="Delete Employer" /></form>';
 			}
 			else if( $user['approved'] == 1 )
 			{
-				echo '<br /><font color="#347C17"><strong><i>Approved</i></strong></font>&nbsp;&nbsp;&nbsp;<form name="approve" id="approve" method="post" action="admin.php?action=approve&amp;empid=' . $id . '">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" name="submit" class="loginButton" value="Reject" /></form>&nbsp;&nbsp;&nbsp;<form name="delst" id="delst" method="post" action="admin.php?action=delete&amp;empid=' . $id . '">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" name="submit" class="loginButton" value="Delete Employer" /></form>';
+				echo '<hr><br />Status: <font color="#347C17"><strong><i>Approved</i></strong></font><br>&nbsp;&nbsp;&nbsp;<form name="approve" id="approve" method="post" action="admin.php?action=approve&amp;empid=' . $id . '">&nbsp;&nbsp;<input type="submit" name="submit" class="loginButton" value="Reject" /></form>&nbsp;&nbsp;&nbsp;<form name="delst" id="delst" method="post" action="admin.php?action=delete&amp;empid=' . $id . '">&nbsp;&nbsp;<input type="submit" name="submit" class="loginButton" value="Delete Employer" /></form>';
 			}
 			
 			if( !is_bool( $result ) )
