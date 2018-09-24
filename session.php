@@ -6,7 +6,7 @@
     
     error_reporting( E_ALL ^ E_NOTICE );
     
-    function validateStudent( $id, $access, $fname, $lname, $argus, $arguscertificate, $classes, $class, $major, $careertype, $geopref, $phone, $email,$permadd, $schooladd, $intplcmnt,$resume, $placement1, $placement2, $placement3, $hidden,$mba,$placed/*,$employee*/)
+    function validateStudent($id,$access,$fname,$lname,$argus,$arguscertificate,$classes,$class,$major,$careertype,$geopref,$phone,$email,$permadd,$schooladd,$intplcmnt,$resume,$placement1,$placement2,$placement3,$hidden,$mba,$placed)
     {
         session_regenerate_id( );
         
@@ -34,7 +34,6 @@
         $_SESSION['hidden']     = $hidden;    
         $_SESSION['mba']        = $mba;
         $_SESSION['placed']     = $placed;
-        /*$_SESSION['employee']   = $employee;*/
         
         $_SESSION['showHiddenUsers'] = 1;
     }
@@ -195,11 +194,6 @@
     {
         $_SESSION['placed'] = $placed;
     }
-
-    /*function updateEmployee($employee)
-    {
-        $_SESSION['employee'] = $employee;
-    }*/
     
     function getResume( $userid )
     {

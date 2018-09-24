@@ -10,7 +10,7 @@
 <?php
 	include_once 'session.php';
 	
-	$salt = "32d9210f37d850d8978c817b7a623f79";
+	$salt = "";
 	
 	if( get_magic_quotes_gpc( ) )
 	{
@@ -25,7 +25,12 @@
 	$query = "SELECT password, access, approved
 			  FROM logins
 			  WHERE username = '$username'";
+	/* RE Server, PHP 5.3 */
 	$result = mssql_query( $query );
+	
+
+	/* Test Environment, PHP 5.6.24
+	$result=$connection->query($query); */
 
 	if(preg_match("/[A-Z]{3}[0-9]{5}|[a-z]{3}[0-9]{5}/",$username))
 	{
@@ -34,26 +39,46 @@
 		die( );
 	}
 	
+    /* Test Environment, PHP 5.6.24
+	if($result->fetchColumn()<1) */
+
+	/* RE Server, PHP 5.3 */
 	if( mssql_num_rows( $result ) < 1 )
 	{
-		if( !is_bool( $result ) )
-			mssql_free_result( $result );
-		
-		mssql_close( $connection );
-		header( 'Location: index.php?error=5' );
-		die( );
+		if(!is_bool($result))
+		{
+			/* RE Server, PHP 5.3 */
+			mssql_free_result($result);
+			
+		}
+		/* RE Server, PHP 5.3 */
+		mssql_close($connection);
+
+		header('Location: index.php?error=5');
+		die();
 	}
 	
-	$user = mssql_fetch_array( $result );
+	/* RE Server, PHP 5.3 */
+	$user = mssql_fetch_array($result);
 	
-	$passwordHash = md5( $salt . $password );
+
+	/* Test Environment, PHP 5.6.24 
+	$user=$result->fetch(PDO::FETCH_ASSOC);
+	*/
+	$passwordHash=md5($salt.$password);
 	
-	if( $passwordHash != trim( $user['password'] ) )
+	if($passwordHash!=trim($user['password']))
 	{
-		mssql_free_result( $result );
-		mssql_close( $connection );
-		header( 'Location: index.php?error=1' );
-		die( );
+		/* RE Server, PHP 5.3 */
+		mssql_free_result($result);
+		mssql_close($connection);
+		
+
+		/* Test Environment, PHP 5.6.24 
+		odbc_close_all();
+		*/
+		header('Location: index.php?error=1');
+		die();
 	}
 	else
 	{
@@ -137,7 +162,7 @@
 					
 				//	$id, $access, $fname, $lname, $argus, $arguscertificate, $classes, $class, $major, $careertype, $geopref, $phone, $email,$permadd, $schooladd, $intplcmnt,$resume
 				
-				validateStudent( $student['id'], $user['access'], $student['fname'], $student['lname'], $student['argus'], $student['arguscertificate'],$student['classes'], $student['class'], $student['major'],$student['careertype'], $student['geopref'], $student['phone'], $student['email'], $student['permadd'], $student['schooladd'], $student['intplcmnt'],$student['resume'],$student['placement1'],$student['placement2'],$student['placement3'],$student['hidden'], $student['mba'], $student['placed'], $student['employee']);
+				validateStudent( $student['id'], $user['access'], $student['fname'], $student['lname'], $student['argus'], $student['arguscertificate'],$student['classes'], $student['class'], $student['major'],$student['careertype'], $student['geopref'], $student['phone'], $student['email'], $student['permadd'], $student['schooladd'], $student['intplcmnt'],$student['resume'],$student['placement1'],$student['placement2'],$student['placement3'],$student['hidden'], $student['mba'], $student['placed']);
 				
 				if( !is_bool( $result ) )
 					mssql_free_result( $result );

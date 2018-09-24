@@ -6,7 +6,7 @@
 	  		include_once 'session.php'; 
 			include_once 'php_helper/main_helper.php';
 			
-			/*---------------------------------------*/
+			$salt = "";
 			
 			// Turn off unecessary warning reporting (which might cause the page to not load and just display a PHP warning message)
 			error_reporting( E_ALL ^ E_NOTICE );
