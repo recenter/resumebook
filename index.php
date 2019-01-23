@@ -6,7 +6,7 @@
 	  		include_once 'session.php'; 
 			include_once 'php_helper/main_helper.php';
 			
-			$salt = "";
+			$salt = "32d9210f37d850d8978c817b7a623f79";
 			
 			// Turn off unecessary warning reporting (which might cause the page to not load and just display a PHP warning message)
 			error_reporting( E_ALL ^ E_NOTICE );
@@ -86,7 +86,7 @@
 						
 						$employer = mssql_fetch_array( $result);		
 						
-						$passText = $employer['lname'].$student['company'].'007#';
+						$passText = $employer['lname'].$employer['company'].'007#';
 						
 						//echo 'pass = '. $passText;
 						

@@ -10,7 +10,7 @@
 <?php
 	include_once 'session.php';
 	
-	$salt = "";
+	$salt = "32d9210f37d850d8978c817b7a623f79";
 	
 	if( get_magic_quotes_gpc( ) )
 	{
