@@ -7,7 +7,7 @@
         
     error_reporting( E_ALL ^ E_NOTICE );
         
-    $salt = "";
+    $salt = "32d9210f37d850d8978c817b7a623f79";
             
     $formFilled = false;
     $showError = false;
