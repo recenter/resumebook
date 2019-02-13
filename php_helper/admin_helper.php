@@ -980,7 +980,7 @@
 		$headers .= "To: " . $fname . " " . $lname . "<" . $email . ">\r\n";
 		$headers .= "From: Real Estate Resume Book <recenter@business.uconn.edu>\r\n";
 		
-		$message = '<a href="http://www3.business.uconn.edu/reresume/"><img src="http://www3.business.uconn.edu/reresume/images/banner.png" width="700" height="78"></a><br /><br />Hello <strong>' . $fname . '</strong>,<br /><br/>This is an automated message confirming your acceptance into the Real Estate Resume Book. At this time, you may log into the website by using your PeopleSoft number as your username, along with the password you chose during registration. Please follow this <a href="http://www3.business.uconn.edu/reresume/RealEstate/ResumeBook/Resume_template.docx">template</a> when you prepare your resume to be uploaded. If you have any questions or concerns, please reply back to this e-mail.<br /><br />Thank you,<br />UCONN Real Estate Department';
+		$message = '<a href="http://www3.business.uconn.edu/reresume/"><img src="http://www3.business.uconn.edu/reresume/images/banner.png" width="700" height="78"></a><br /><br />Hello <strong>' . $fname . '</strong>,<br /><br/>This is an automated message confirming your acceptance into the Real Estate Resume Book. At this time, you may log into the website by using your PeopleSoft number as your username, along with the password you chose during registration. Please follow this <a href="http://www3.business.uconn.edu/reresume/docs/Resume_template.pdf">template</a> when you prepare your resume to be uploaded. If you have any questions or concerns, please reply back to this e-mail.<br /><br />Thank you,<br />UCONN Real Estate Department';
 							
 		if( !mail( $email, $subject, $message, $headers ) )
 			echo "mail Error";
@@ -994,7 +994,7 @@
 		$headers .= "To: " . $fname . " " . $lname . "<" . $email . ">\r\n";
 		$headers .= "From: Real Estate Resume Book <recenter@business.uconn.edu>\r\n";
 		
-		$message = '<a href="http://www3.business.uconn.edu/reresume/"><img src="http://www3.business.uconn.edu/reresume/images/banner.png" width="700" height="78"></a><br /><br />Hello <strong>' . $fname . '</strong>,<br /><br/>This is an automated message confirming your acceptance into the Real Estate Resume Book. At this time, you may log into the website by using your email address as your username, along with the password you chose during registration. Please follow this <a href="http://www3.business.uconn.edu/reresume/RealEstate/ResumeBook/Resume_template.docx">template</a> when you prepare your resume to be uploaded. If you have any questions or concerns, please reply back to this e-mail.<br /><br />Thank you,<br />UCONN Real Estate Department';
+		$message = '<a href="http://www3.business.uconn.edu/reresume/"><img src="http://www3.business.uconn.edu/reresume/images/banner.png" width="700" height="78"></a><br /><br />Hello <strong>' . $fname . '</strong>,<br /><br/>This is an automated message confirming your acceptance into the Real Estate Resume Book. At this time, you may log into the website by using your email address as your username, along with the password you chose during registration. Please follow this <a href="http://www3.business.uconn.edu/reresume/docs/Resume_template.pdf">template</a> when you prepare your resume to be uploaded. If you have any questions or concerns, please reply back to this e-mail.<br /><br />Thank you,<br />UCONN Real Estate Department';
 							
 		if( !mail( $email, $subject, $message, $headers ) )
 			echo "mail Error";

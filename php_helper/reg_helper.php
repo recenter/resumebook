@@ -1,5 +1,7 @@
 <?php
 	include_once 'main_helper.php';
+
+	define(RE_CENTER_DEPT_HEAD_EMAIL, "debbie.philips@uconn.edu");
 	
 	function showStudentRegistrationConfirmation( $fname, $lname, $argus, $arguscertificate, $class, $major, $careertypeOptions, $geopref, $phone, $psoft, $classes, $email )
 	{
@@ -462,7 +464,7 @@
 		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 		$headers .= "To: " . $fname . " " . $lname . "<" . $email . ">\r\n";
 		$headers .= "From: Real Estate Resume Book <recenter@business.uconn.edu>\r\n";
-		$headers .= "Cc: Administrative Coordinator  <debbie.philips@business.uconn.edu>\r\n";
+		$headers .= "Cc: Administrative Coordinator  <" . RE_CENTER_DEPT_HEAD_EMAIL . ">\r\n";
 		
 		$message = '<a href="http://www3.business.uconn.edu/reresume/"><img src="http://www3.business.uconn.edu/reresume/images/banner.png" width="700" height="78"></a><br /><br />Hello <strong>' . $fname . '</strong>,<br /><br/>This is an automated message confirming your registration with the Real Estate Resume Book. At this time, the Real Estate department is reviewing your application and will notify you of your acceptance in 1-2 business days. If you have any questions or concerns, please reply back to this e-mail.<br /><br />Thank you,<br />UCONN Real Estate Department';
 							
@@ -487,7 +489,7 @@
 		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 		$headers .= "To: " . $fname . " " . $lname . "<" . $email . ">\r\n";
 		$headers .= "From: Real Estate Resume Book <recenter@business.uconn.edu>\r\n";
-		$headers .= "Cc: Administrative Coordinator  <debbie.philips@business.uconn.edu>\r\n";
+		$headers .= "Cc: Administrative Coordinator  <". RE_CENTER_DEPT_HEAD_EMAIL . ">\r\n";
 		
 		$message = '<a href="http://www3.business.uconn.edu/reresume/"><img src="http://www3.business.uconn.edu/reresume/images/banner.png" width="700" height="78"></a><br /><br />Hello <strong>' . $fname . '</strong>,<br /><br/>This is an automated message confirming your registration with the Real Estate Resume Book. At this time, the Real Estate department is reviewing your application and will notify you of your acceptance in 1-2 business days. If you have any questions or concerns, please reply back to this e-mail.<br /><br />Thank you,<br />UCONN Real Estate Department';
 							
@@ -512,7 +514,7 @@
 		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 		$headers .= "To: " . $fname . " " . $lname . "<" . $email . ">\r\n";
 		$headers .= "From: Real Estate Resume Book <recenter@business.uconn.edu>\r\n";
-		$headers .= "Cc: Administrative Coordinator  <debbie.philips@business.uconn.edu>\r\n";
+		$headers .= "Cc: Administrative Coordinator  <" . RE_CENTER_DEPT_HEAD_EMAIL . ">\r\n";
 		
 		$message = '<a href="http://www3.business.uconn.edu/reresume/"><img src="http://www3.business.uconn.edu/reresume/images/banner.png" width="700" height="78"></a><br /><br />Hello <strong>' . $fname . '</strong>,<br /><br/>This is an automated message confirming your registration with the Real Estate Resume Book. At this time, the Real Estate department is reviewing your application and will notify you of your acceptance in 1-2 business days. If you have any questions or concerns, please reply back to this e-mail.<br /><br />Thank you,<br />UCONN Real Estate Department';
 							
